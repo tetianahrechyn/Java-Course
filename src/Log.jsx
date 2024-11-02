@@ -1,9 +1,38 @@
-import React from 'react';
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import javaImage from "./images/java11.png";
+import React, { useState } from 'react'; // Додано useState
+import { auth } from './firebase'; // Імпорт auth з firebase.js
+import { signInWithEmailAndPassword } from 'firebase/auth'; // Імпорт функції для входу
+import loginImage from './images/login.png'; // Замініть на ваш шлях до зображення
 
 const Log = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null); // Стан для помилок
+    const [successMessage, setSuccessMessage] = useState(''); // Стан для повідомлення про успіх
+    const navigate = useNavigate(); // Ініціалізуємо navigate
+
+    const handleLogin = async () => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password); // Виклик функції для входу
+            console.log('Користувача успішно увійшов');
+            setSuccessMessage('Успішний вхід!'); // Повідомлення про успіх
+            setError(null); // Скидання помилки
+
+            // Перенаправлення на /our/learn
+            navigate('/our/learn');
+
+            // Встановлюємо таймер для скидання successMessage через 5 секунд
+            setTimeout(() => {
+                setSuccessMessage('');
+            }, 5000); // 5000 мілісекунд = 5 секунд
+        } catch (err) {
+            setError(err.message); // Встановлення повідомлення про помилку
+            console.error('Помилка входу:', err);
+        }
+    };
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', top: -105, background: '#F4F2F6' }}>
             <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
@@ -75,6 +104,12 @@ const Log = () => {
                             Увійдіть, щоб отримати доступ до свого облікового запису
                         </div>
 
+                        <img
+                            style={{ width: 600, height: 800, position: 'absolute', left: 650, top: -200 }}
+                            src={loginImage}
+                            alt="login"
+                        />
+
                         <div style={{
                             width: '100%',
                             height: '100%',
@@ -123,6 +158,8 @@ const Log = () => {
                                         <input
                                             type="email"
                                             placeholder="Електронна пошта"
+                                            value={email} // Додано прив'язку до стану
+                                            onChange={(e) => setEmail(e.target.value)} // Обробка зміни
                                             style={{
                                                 flex: '1 1 0',
                                                 height: 40,
@@ -173,6 +210,8 @@ const Log = () => {
                                         <input
                                             type="password"
                                             placeholder="Пароль"
+                                            value={password} // Додано прив'язку до стану
+                                            onChange={(e) => setPassword(e.target.value)} // Обробка зміни
                                             style={{
                                                 flex: '1 1 0',
                                                 height: 40,
@@ -214,7 +253,7 @@ const Log = () => {
 
                             <div style={{
                                 width: 510,
-                                minHeight: 50, // Замість height
+                                minHeight: 50,
                                 borderRadius: 4,
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -224,9 +263,13 @@ const Log = () => {
                                 border: '1px #79747E solid',
                                 cursor: 'pointer',
                                 marginTop: 16,
-                            }}>
-                                <div style={{ color: '#F3F3F3', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Login</div>
+                            }} onClick={handleLogin}> {/* Виправлено: обробник події переміщено сюди */}
+                                <div style={{ color: '#F3F3F3', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Увійти</div>
                             </div>
+
+                            {/* Відображення повідомлення про успіх або помилку */}
+                            {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
+                            {error && <div style={{ color: 'red' }}>{error}</div>}
 
 
                             {/* Додано обгортку для тексту "Немає облікового запису?" */}
@@ -239,7 +282,8 @@ const Log = () => {
                                 marginTop: 16, // Відстань до кнопки
                             }}>
                                 <span style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500' }}>Немає облікового запису? </span>
-                                <span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Зареєструватися</span>
+                                <Link to="/sign" style={{ textDecoration: 'none' }}><span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Зареєструватися</span>
+                                </Link>
                             </div>
                         </div>
                     </div>

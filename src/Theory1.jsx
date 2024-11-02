@@ -1,5 +1,5 @@
 import React from 'react';
-import javaImage from './images/java11.png';
+import bitImage from './images/bit.png';
 import logo from './images/logo.png'; // Оновлений імпорт зображення
 import newLogo from './images/newLogo.png';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
@@ -9,14 +9,30 @@ import Log from './Log';
 import Sign from './Sign';
 import Learn from './learn';
 import outImage from './images/out.png';
-import theImage from './images/the.png';
+import palImage from './images/pal.png';
+import komImage from './images/kom.png';
+import wordImage from './images/word.png';
+import pal1Image from './images/pal1.png';
+import kom1Image from './images/kom1.png';
 import praImage from './images/pra.png';
 import plusImage from './images/plus.png';
+import { signOut } from "firebase/auth";
+import { auth } from './firebase';
 
-const Theory1Page = () => (
+const Theory1Page = () => {
+    const handleLogout = async () => {
+        try {
+            await signOut(auth); // Вихід з акаунту
+            console.log("Користувача виведено з системи");
+            // Можливо, ви хочете перенаправити користувача на сторінку входу або додати іншу логіку
+        } catch (error) {
+            console.error("Помилка при виході:", error);
+        }
+    };
+    return (
     <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
         <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
-            <div style={{ width: 1440, height: 3796, background: '#F4F2F6' }} />
+            <div style={{ width: 1440, height: 3570, background: '#F4F2F6' }} />
             <div style={{ width: 580, height: 393, position: 'absolute', left: 92, top: 217 }}>
             </div>
 
@@ -206,6 +222,340 @@ const Theory1Page = () => (
                     - Модифікатори без-доступу: final, abstract, strictfp.<br />
                     Більш детально про модифікатори буде описано пізніше.
                 </div>
+
+
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 1300,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Змінні в Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 1330,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    Ми побачимо наступні змінні в Java:<br />
+                    - Локальні змінні.<br />
+                    - Змінні класу (статичні змінні в Java).<br />
+                    - Змінні екземпляра (нестатичні змінні в Java).
+                </div>
+
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 1450,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Масиви в Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 1480,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    В Java масиви є об'єктами, які зберігають кілька змінних одного і того ж типу. Тим не менше, сам масив є об'єктом. Ми розглянемо, як <br />
+                    створити і заповнити масив Java в наступних статтях.
+                </div>
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 1560,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Ключові слова в Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 1590,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    Нижче наведений список ключових слів в Java. Ключове слово в Java не може бути використане як постійне або змінне, або будь-яке <br />
+                    інше ім’я для ідентифікаторів.
+                </div>
+
+                <img
+                    src={wordImage}
+                    alt="word"
+                    style={{
+                        width: '669',
+                        height: '250',
+                        position: 'absolute',
+                        left: -170,
+                        top: 1680,
+                        zIndex: 3
+                    }}
+                />
+
+
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 1980,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Є два типи даних, доступні в Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 2010,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    - Примітивні типи даних Java.<br />
+                    - Об'єктні типи даних Java.
+                </div>
+
+
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 2090,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Примітивні типи даних Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 2120,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    В Java існує всього 8 типів примітивних даних, які не є об'єктами. Імена примітивних  типів даних в Java є ключовими словами. <br />
+                    Давайте тепер розглянемо в ці типи даних Java.
+                </div>
+
+                <img
+                    src={bitImage}
+                    alt="word"
+                    style={{
+                        width: '679',
+                        height: '350',
+                        position: 'absolute',
+                        left: -160,
+                        top: 2210,
+                        zIndex: 3
+                    }}
+                />
+
+
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 2420,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Довідка по типами даних Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 2450,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    - Змінні створюються за допомогою певних конструкторів класів Java. Вони використовуються для доступу до об'єктів. Ці змінні<br />
+                    оголошуються певного типу, який не може бути змінений. Наприклад, Employee, Cat і т.д.<br />
+                    - В Java об'єкти класу, а також змінні масиву підпадають під різні типи даних.<br />
+                    - В Java значення будь-якої заданої змінної за замовчуванням дорівнює нулю.<br />
+                    - Задана змінна може бути використана для позначення будь-якого об'єкта, заявленого типу або будь-якого сумісного типу.<br />
+                    - Приклад: Animal animal = new Animal ("dog");
+                </div>
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 2620,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Коментарі в Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 2650,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    Java підтримує однорядкові і багаторядкові коментарі, дуже схожі на С і С ++. Всі символи що всередині будь-якого коментаря<br />
+                    ігноруються компілятором Java.
+                </div>
+
+                <img
+                    src={palImage}
+                    alt="word"
+                    style={{
+                        width: '669',
+                        height: '250',
+                        position: 'absolute',
+                        left: -170,
+                        top: 2740,
+                        zIndex: 3
+                    }}
+                />
+
+                <img
+                    src={komImage}
+                    alt="word"
+                    style={{
+                        width: '669',
+                        height: '250',
+                        position: 'absolute',
+                        left: -140,
+                        top: 2744,
+                        zIndex: 3
+                    }}
+                />
+
+                <div style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: 530,
+                    lineHeight:  1.4,
+                    wordWrap: 'break-word',
+                    top: 3080,
+                    left: -360,
+                    position: 'absolute',
+                }}>
+                    Перша програма на Java:
+                </div>
+
+                <div style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    top: 3110,
+                    whiteSpace: 'nowrap',
+                    left: -360,
+                    textAlign: 'left',
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    lineHeight:  1.4,
+                    position: 'absolute',
+                    wordWrap: 'break-word'
+                }}>
+                    Давайте розглянемо простий код, який буде друкувати слова "Hello World".
+                </div>
+
+                <img
+                    src={pal1Image}
+                    alt="word"
+                    style={{
+                        width: '669',
+                        height: '250',
+                        position: 'absolute',
+                        left: -170,
+                        top: 3180,
+                        zIndex: 3
+                    }}
+                />
+
+                <img
+                    src={kom1Image}
+                    alt="word"
+                    style={{
+                        width: '669',
+                        height: '250',
+                        position: 'absolute',
+                        left: -140,
+                        top: 3185,
+                        zIndex: 3
+                    }}
+                />
+
             </div>
 
 
@@ -216,12 +566,7 @@ const Theory1Page = () => (
 
 
 
-
-
-
-
-
-            <Link to="/">
+            <Link to="/" onClick={handleLogout}>
                 <img
                     src={outImage}
                     alt="out"
@@ -312,7 +657,7 @@ const Theory1Page = () => (
                     height: '43.804px',
                     position: 'absolute',
                     left: 700,
-                    top: 3900,
+                    top: 3680,
                     zIndex: 2,
                 }}
             />
@@ -326,7 +671,7 @@ const Theory1Page = () => (
                 fontWeight: '800',
                 position: 'absolute',
                 left: 812,
-                top: 3900,
+                top: 3680,
                 transform: 'translateX(-50%)',
                 zIndex: 2,
             }}>
@@ -334,7 +679,7 @@ const Theory1Page = () => (
                 <div>to Hero</div>
             </div>
 
-            <div style={{ width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 3890 }} />
+            <div style={{ width: 1440, height: 385, background: 'white', position: 'absolute', left: 0, top: 3660 }} />
             <div style={{
                 color: '#150E06',
                 fontSize: 16,
@@ -343,11 +688,11 @@ const Theory1Page = () => (
                 lineHeight: '24px',
                 position: 'absolute',
                 left: 565,
-                top: 4179,
+                top: 3979,
             }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
         </div>
         {/* Новий блок з текстом під новим логотипом */}
-        <div style={{ width: '100%', height: '100%', position: 'relative', top: 3890 }}>
+        <div style={{ width: '100%', height: '100%', position: 'relative', top: 3670 }}>
             <Link to="/about" style={{
                 position: 'absolute',
                 left: 745,
@@ -390,11 +735,11 @@ const Theory1Page = () => (
                 Головна сторінка
             </Link>
             {/* Додано рамка під текстом */}
-            <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
+            <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 334, right: '10%', left: '8%' }}></div>
         </div>
     </div>
 );
-
+};
 
 
 export default Theory1Page;

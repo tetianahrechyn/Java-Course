@@ -1,9 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link } from 'react-router-dom';
+import signImage from "./images/sign.png";
+import app from './firebase';
+import { auth } from './firebase'; // Імпортуємо auth
 
-const Log = () => {
+const Sign = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(''); // Додати стан для успішного повідомлення
+
+    const handleRegister = async () => {
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            console.log('Користувача успішно зареєстровано');
+            setSuccessMessage('Користувача успішно зареєстровано'); // Встановити повідомлення про успіх
+            setError(null); // Скинути помилку, якщо вона була
+        } catch (err) {
+            setError(err.message);
+            console.error('Помилка реєстрації:', err);
+        }
+    };
+
+    // Ефект для очищення повідомлення про успіх через 10 секунд
+    useEffect(() => {
+        if (successMessage) {
+            const timer = setTimeout(() => {
+                setSuccessMessage('');
+            }, 5000); // 10 секунд
+
+            return () => clearTimeout(timer); // Очищення таймера при демонтажі або оновленні
+        }
+    }, [successMessage]);
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', top: -105, background: '#F4F2F6' }}>
             <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
@@ -73,6 +104,12 @@ const Log = () => {
                         }}>
                             Зареєструйтесь, щоб ви могли отримати доступ до свого особистого облікового запису.
                         </div>
+
+                        <img
+                            style={{ width: 440, height: 600, position: 'absolute', left: -640, top: -100 }}
+                            src={signImage}
+                            alt="sign"
+                        />
 
                         <div style={{
                             width: '100%',
@@ -194,6 +231,8 @@ const Log = () => {
                                 </div>
                             </div>
 
+
+
                             {/* Рядок для електронної пошти та мобільного телефону */}
                             <div style={{
                                 display: 'flex',
@@ -237,6 +276,8 @@ const Log = () => {
                                             <input
                                                 type="email"
                                                 placeholder="Електронна пошта"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
                                                 style={{
                                                     flex: '1 1 0',
                                                     height: 40,
@@ -342,6 +383,8 @@ const Log = () => {
                                         <input
                                             type="password"
                                             placeholder="Пароль"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
                                             style={{
                                                 flex: '1 1 0',
                                                 height: 40,
@@ -410,23 +453,27 @@ const Log = () => {
                             </div>
                         </div>
 
-                            <div style={{
-                                width: 510,
-                                minHeight: 50, // Замість height
-                                borderRadius: 4,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                gap: 4,
-                                display: 'flex',
-                                background: '#515DEF',
-                                border: '1px #79747E solid',
-                                cursor: 'pointer',
-                                marginTop: 310,
-                            }}>
-                                <div style={{ color: '#F3F3F3', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Створити акаунт</div>
+                        <div onClick={handleRegister} style={{
+                            width: 510,
+                            minHeight: 50,
+                            borderRadius: 4,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            gap: 4,
+                            display: 'flex',
+                            background: '#515DEF',
+                            border: '1px #79747E solid',
+                            cursor: 'pointer',
+                            marginTop: 310,
+                        }}>
+                            <div style={{ color: '#F3F3F3', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>
+                                Створити акаунт
                             </div>
+                        </div>
+                        {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
+                        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
-                            {/* Додано обгортку для тексту "Вже маєте обліковий запис?" */}
+                        {/* Додано обгортку для тексту "Вже маєте обліковий запис?" */}
                             <div style={{
                                 width: 512, // Зроблено так само, як поля введення
                                 display: 'flex',
@@ -436,7 +483,12 @@ const Log = () => {
                                 marginTop: 16, // Відстань до кнопки
                             }}>
                                 <span style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500' }}>Вже маєте обліковий запис? </span>
-                                <span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Увійти</span>
+                                <Link to="/log" style={{ textDecoration: 'none' }}>
+    <span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>
+        Увійти
+    </span>
+                                </Link>
+
                             </div>
                         </div>
 
@@ -542,4 +594,4 @@ const Log = () => {
     );
 };
 
-export default Log;
+export default Sign;

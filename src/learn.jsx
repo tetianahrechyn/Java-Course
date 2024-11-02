@@ -1,20 +1,50 @@
-import React from 'react';
 import javaImage from './images/java11.png';
 import logo from './images/logo.png'; // Оновлений імпорт зображення
 import newLogo from './images/newLogo.png';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Redirect, useNavigate } from 'react-router-dom';
 import About from './About';
 import Our from './Our'; // Імпорт нового компонента
 import Log from './Log';
 import Sign from './Sign';
 import Learn from './learn';
+import React, { useEffect, useState } from 'react';
+import { auth } from './firebase'; // Імпортуємо auth
+import { onAuthStateChanged } from 'firebase/auth';
 import outImage from './images/out.png';
 import theImage from './images/the.png';
 import praImage from './images/pra.png';
 import plusImage from './images/plus.png';
 import Theory1Page from "./Theory1";
+import { signOut } from "firebase/auth";
+import { useAuth } from './AuthContext';
 
-const LearnPage = () => (
+const LearnPage = () => {
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate(); // Використовуємо useNavigate для перенаправлення
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth); // Вихід з акаунту
+            console.log("Користувача виведено з системи");
+            // Можливо, ви хочете перенаправити користувача на сторінку входу або додати іншу логіку
+        } catch (error) {
+            console.error("Помилка при виході:", error);
+        }
+    };
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user); // Користувач увійшов
+            } else {
+                setUser(null); // Користувач вийшов
+                navigate('/log'); // Перенаправлення на сторінку входу
+            }
+        });
+
+        return () => unsubscribe(); // Очистка підписки на unmount
+    }, [navigate]);
+    return (
     <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
         <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
             <div style={{ width: 1440, height: 796, background: '#F4F2F6' }} />
@@ -53,7 +83,7 @@ const LearnPage = () => (
             </div>
 
 
-            <Link to="/">
+            <Link to="/" onClick={handleLogout}>
                 <img
                     src={outImage}
                     alt="out"
@@ -67,6 +97,7 @@ const LearnPage = () => (
                     }}
                 />
             </Link>
+
 
 
             <img
@@ -364,18 +395,9 @@ const LearnPage = () => (
             <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
         </div>
     </div>
-);
-const App = () => (
-    <Router>
-        <Routes>
+    );
+};
 
-            <Route path="/our" element={<Our />} />
-            <Route path="/our/learn" element={<LearnPage />} />
-            <Route path="/theory1" element={<Theory1Page />} />
-
-        </Routes>
-    </Router>
-);
 
 
 export default LearnPage;
