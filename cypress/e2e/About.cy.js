@@ -1,61 +1,32 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import About from './About';
-import { MemoryRouter } from 'react-router-dom';
-
-describe('About Component', () => {
-    test('renders the About heading', () => {
-        render(
-            <MemoryRouter>
-                <About />
-            </MemoryRouter>
-        );
-
-        const headingElement = screen.getByText(/ПРО НАС/i);
-        expect(headingElement).toBeInTheDocument();
+describe('About Page', () => {
+    beforeEach(() => {
+        cy.visit('http://localhost:3000/about'); // Перейти на сторінку "Про нас"
     });
 
-    test('renders the main content about JAVA programming', () => {
-        render(
-            <MemoryRouter>
-                <About />
-            </MemoryRouter>
-        );
-
-        const contentElement = screen.getByText(/Сайт для вивчення мови програмування JAVA/i);
-        expect(contentElement).toBeInTheDocument();
+    it('має відображатися правильний заголовок', () => {
+        cy.contains('ПРО НАС').should('be.visible');
     });
 
-    test('renders the theoretical base section', () => {
-        render(
-            <MemoryRouter>
-                <About />
-            </MemoryRouter>
-        );
-
-        const theoreticalBaseElement = screen.getByText(/Теоретична база/i);
-        expect(theoreticalBaseElement).toBeInTheDocument();
+    it('повинен відображати вступний текст', () => {
+        cy.contains('Навчальний центр From Zero to Hero').should('be.visible');
+        cy.contains('можливість змінити своє життя').should('be.visible');
     });
 
-    test('contains a link to the sign up page', () => {
-        render(
-            <MemoryRouter>
-                <About />
-            </MemoryRouter>
-        );
-
-        const signUpLink = screen.getByText(/Зареєструватися/i);
-        expect(signUpLink).toHaveAttribute('href', '/sign');
+    it('має відображатися розділ теоретичної бази', () => {
+        cy.contains('Теоретична база').should('be.visible');
     });
 
-    test('renders the footer with copyright information', () => {
-        render(
-            <MemoryRouter>
-                <About />
-            </MemoryRouter>
-        );
+    it('має відображатися розділ практичних завдань', () => {
+        cy.contains('Практичні завдання').should('be.visible');
+        cy.contains('пропонуємо тести та інтерактивні завдання').should('be.visible');
+    });
 
-        const footerText = screen.getByText(/Copyright Ideapeel Inc © 2024. All Right Reserved/i);
-        expect(footerText).toBeInTheDocument();
+    it('має перейти на сторінку реєстрації', () => {
+        cy.contains('Зареєструватися').click();
+        cy.url().should('include', '/sign');
+    });
+
+    it('має відображатися правильний логотип', () => {
+        cy.get('img[alt="Лого"]').should('exist');
     });
 });

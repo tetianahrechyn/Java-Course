@@ -14,7 +14,9 @@
     "test:ct": "cypress run --component --browser chrome",
     "test": "npm run test:ct",
     "lint:staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "server": "node server.js"
+
   },
   "author": "tetianahrechyn",
   "license": "ISC",

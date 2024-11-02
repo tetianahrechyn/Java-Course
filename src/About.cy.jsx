@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'cypress/react';
 import { MemoryRouter } from 'react-router-dom'; // імпортуємо MemoryRouter
-import About from './About'; // шлях до вашого компонента
+import About from './About';
 
 
 describe('<About />', () => {

@@ -12,6 +12,7 @@ import { AuthProvider } from './AuthContext';
 import Theory1Page from "./Theory1";
 import Pract1Page from "./Pract1";
 import Plus1Page from "./Plus1";
+import NotFound from './NotFound';
 
 const HomePage = () => (
     <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
@@ -270,12 +271,11 @@ const App = () => (
             <Route path="/our/learn" element={<Learn />} />
             <Route path="/log" element={<Log />} />
             <Route path="/sign" element={<Sign />} />
-
+            <Route path="*" element={<NotFound />} />
             <Route path="/theory1" element={<Theory1Page />} />
             <Route path="/pract1" element={<Pract1Page />} />
             <Route path="/plus1" element={<Plus1Page />} />
         </Routes>
     </Router>
 );
-
 export default App;
