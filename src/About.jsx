@@ -416,7 +416,7 @@ const About = () => {
 
                 <img
                     src={newLogo}
-                    alt="Новий логотип"
+                    alt="Новий"
                     style={{
                         width: '43.851px',
                         height: '43.804px',

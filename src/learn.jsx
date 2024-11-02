@@ -19,6 +19,7 @@ import { signOut } from "firebase/auth";
 import { useAuth } from './AuthContext';
 
 const LearnPage = () => {
+
     const [user, setUser] = useState(null);
     const navigate = useNavigate(); // Використовуємо useNavigate для перенаправлення
 
