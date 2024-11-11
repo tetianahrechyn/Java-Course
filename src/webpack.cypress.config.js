@@ -1,15 +1,10 @@
-
 const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 
 const config = {
     mode: 'development',
-    devServer: {
-        open: true,
-        port: 3000,
-    },
     output: {
-        filename: 'myProject.js',
+        filename: 'bundle.js',
     },
     module: {
         rules: [
@@ -30,7 +25,22 @@ const config = {
                     },
                 ],
             },
+            {
+                test: /\.jsx?$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env', '@babel/preset-react'],
+                            plugins: ['istanbul'],
+                        },
+                    },
+                ],
+            },
         ],
+    },
+    devServer: {
+        port: 3000,
     },
 };
 
