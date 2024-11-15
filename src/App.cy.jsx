@@ -1,6 +1,9 @@
 import React from 'react';
 
 import App from './App';
+import {mount} from "cypress/react";
+import {MemoryRouter} from "react-router-dom";
+
 
 describe('<App />', () => {
     it('renders', () => {
@@ -8,4 +11,6 @@ describe('<App />', () => {
         cy.mount(<App />);
         // cy.myCustomMount(<App />);
     });
+
+
 });
