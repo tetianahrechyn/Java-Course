@@ -8,6 +8,7 @@ import Our from './Our'; // Імпорт нового компонента
 import Log from './Log';
 import Sign from './Sign';
 import Learn from './learn';
+import { AuthProvider } from './AuthContext';
 import Theory1Page from "./Theory1";
 import Pract1Page from "./Pract1";
 import Plus1Page from "./Plus1";
