@@ -434,5 +434,14 @@ const Plus1 = () => {
         </div>
     );
 };
-
+function App() {
+    return (
+        <Router>
+            <Switch>
+                <Route path="/plus1" component={Plus1Page} />
+                {/* Інші маршрути */}
+            </Switch>
+        </Router>
+    );
+}
 export default Plus1;
