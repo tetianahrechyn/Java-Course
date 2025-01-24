@@ -17,7 +17,7 @@ const config = {
                     to: path.resolve(__dirname, '../dist', 'assets'),
                 },
             ],
-        }),,
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../templates/index.html'),
         }),
@@ -26,6 +26,7 @@ const config = {
         rules: [
             {
                 test: /\.jsx?$/,
+                exclude: /node_modules/,
                 use: [
                     {
                         loader: 'babel-loader',
@@ -34,6 +35,17 @@ const config = {
                         },
                     },
                 ],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,  // Лоадер для зображень
+                type: 'asset/resource',
+                generator: {
+                    filename: 'images/[hash][ext][query]',  // Налаштування шляхів
+                },
+            },
+            {
+                test: /\.css$/i,  // Лоадер для CSS
+                use: ['style-loader', 'css-loader'],
             },
         ],
     },
