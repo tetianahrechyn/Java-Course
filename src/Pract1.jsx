@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import javaImage from './images/java11.png';
 import logo from './images/logo.png'; // Оновлений імпорт зображення
 import newLogo from './images/newLogo.png';
@@ -11,10 +11,61 @@ import Learn from './learn';
 import outImage from './images/out.png';
 import theImage from './images/the.png';
 import praImage from './images/pra.png';
+import {auth, database} from './firebase'; // Імпорт бази даних
+import { ref, onValue } from 'firebase/database';
+import { getDoc, doc, setDoc } from 'firebase/firestore';
 import plusImage from './images/plus.png';
 import Theory1Page from "./Theory1";
+import {signOut} from "firebase/auth";
 
 const Pact1 = () => {
+    const [questions, setQuestions] = useState([]);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [result, setResult] = useState("");
+    const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
+
+
+    useEffect(() => {
+        const questionsRef = ref(database, 'questions');
+        onValue(questionsRef, (snapshot) => {
+            const data = snapshot.val();
+            const questionsList = [];
+            for (let id in data) {
+                questionsList.push({ id, ...data[id] });
+            }
+            setQuestions(questionsList);
+        });
+    }, []);
+
+    const questionData = questions[selectedQuestionIndex];
+
+    const handleAnswerSelect = (option) => {
+        setSelectedAnswer(option);
+    };
+
+    const checkAnswer = () => {
+        if (questionData && selectedAnswer) {
+            const isCorrect = selectedAnswer.trim() === questionData.correctAnswer.trim();
+            setResult(isCorrect ? "Правильна відповідь!" : "Неправильна відповідь!");
+        } else {
+            setResult("Будь ласка, виберіть відповідь перед перевіркою.");
+        }
+    };
+
+    const nextQuestion = () => {
+        setSelectedAnswer(null);
+        setResult("");
+        setSelectedQuestionIndex((prevIndex) => prevIndex + 1);
+    };
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            alert("Ви вийшли з акаунту."); // Відображає повідомлення про вихід
+        } catch (error) {
+            console.error("Помилка при виході:", error);
+            alert("Сталася помилка, спробуйте ще раз."); // Обробка помилки
+        }
+    };
     return (
         <div style={{width: '100%', height: '100%', position: 'relative', background: '#F4F2F6'}}>
             <div style={{width: 1709, height: 934, position: 'absolute', left: 0, top: 94}}>
@@ -105,78 +156,48 @@ const Pact1 = () => {
                         />
                     </div>
 
-                    {/* Контейнер для полів вводу */}
-                    <div style={{width: 316, marginTop: 350}}> {/* Додаємо marginTop */}
-                        {/* Білий контейнер для запитання */}
-                        <div
-                            style={{
-                                width: '100%',
-                                height: 100,
-                                padding: '16px',
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                border: '1px solid #79747E',
-                                borderRadius: 6,
-                                boxShadow: '0px 2px 13px 4px rgba(157, 87, 227, 0.25)',
-                                marginBottom: 20,
-                                zIndex: 2,
-                                position: 'relative',
-                                display: 'flex',
-                                alignItems: 'center', // Вирівнювання по вертикалі
-                                backgroundColor: 'white', // Колір фону
-                            }}
-                        >
-
-                        </div>
-
-                        {/* Відображення варіантів відповідей */}
-                        {['Варіант відповіді 1', 'Варіант відповіді 2', 'Варіант відповіді 3', 'Варіант відповіді 4'].map(
-                            (label, index) => (
-                                <div
-                                    key={index}
-                                    style={{
-                                        width: '100%',
-                                        height: 30, // Висота контейнера
-                                        padding: '16px',
-                                        fontSize: 14,
-                                        fontFamily: 'Poppins',
-                                        border: '1px solid #79747E',
-                                        borderRadius: 6,
-                                        zIndex: 2,
-                                        position: 'relative',
-                                        boxShadow: '0px 2px 13px 4px rgba(157, 87, 227, 0.25)',
-                                        marginBottom: 20,
-                                        display: 'flex',
-                                        alignItems: 'center', // Вирівнювання по вертикалі
-                                        backgroundColor: 'white', // Колір фону
-                                    }}
-                                >
-
-                                </div>
-                            )
+                    <div style={{ width: 316, marginTop: 350, zIndex: 10  }}>
+                        {questionData && (
+                            <div style={{
+                                width: '100%', padding: '16px', fontSize: 14, fontFamily: 'Poppins',
+                                border: '1px solid #79747E', borderRadius: 6, backgroundColor: 'white', marginBottom: 20
+                            }}>
+                                {questionData.question}
+                            </div>
                         )}
-                    </div>
-
-                    {/* Кнопка створення */}
-                    <div style={{width: 196, height: 64, marginLeft: 67}}>
-                        <button
-                            style={{
-                                width: '100%',
-                                height: 64,
-                                background: '#7C4EE4',
-                                borderRadius: 50,
-                                color: 'white',
-                                fontSize: 25,
-                                fontFamily: 'Poppins',
-                                fontWeight: '500',
-                                boxShadow: '0px 2px 13px 4px rgba(157, 87, 227, 0.25)',
-
-                            }}
-                        >
-                            Далі
+                        {questionData && questionData.options.map((option, index) => (
+                            <div key={index} onClick={() => handleAnswerSelect(option)} style={{
+                                padding: '16px', fontSize: 14, fontFamily: 'Poppins', borderRadius: 6,
+                                backgroundColor: selectedAnswer === option ? '#EDE7F6' : 'white', marginBottom: 10,
+                                cursor: 'pointer'
+                            }}>
+                                {option}
+                            </div>
+                        ))}
+                        <button onClick={checkAnswer} style={{
+                            width: 196, height: 64, background: '#7C4EE4', borderRadius: 50, color: 'white',
+                            fontSize: 25, fontFamily: 'Poppins', fontWeight: '500'
+                        }}>
+                            Перевірити
                         </button>
+                        {result && (
+                            <div style={{
+                                marginTop: 20, fontSize: 18,
+                                color: result.includes("Правильна") ? 'green' : 'red'
+                            }}>
+                                {result}
+                            </div>
+                        )}
+                        {selectedQuestionIndex < questions.length - 1 && (
+                            <button onClick={nextQuestion} style={{
+                                width: 196, height: 64, background: '#7C4EE4', borderRadius: 50, color: 'white',
+                                fontSize: 25, fontFamily: 'Poppins', fontWeight: '500', marginTop: 20
+                            }}>
+                                Наступне питання
+                            </button>
+                        )}
+                        </div>
                     </div>
-                </div>
 
                 <Link to="/">
                     <img

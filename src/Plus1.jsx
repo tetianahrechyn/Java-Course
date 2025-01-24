@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, database } from './firebase'; // Імпорт бази даних
 import { ref, set } from 'firebase/database'; // Імпорт функцій для запису в базу даних
 import javaImage from './images/java11.png';
@@ -15,12 +15,32 @@ import theImage from './images/the.png';
 import praImage from './images/pra.png';
 import plusImage from './images/plus.png';
 import Theory1Page from "./Theory1";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 const Plus1 = () => {
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['', '', '', '']);
     const [correctAnswer, setCorrectAnswer] = useState('');
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+        return () => unsubscribe(); // Очистка підписки на unmount
+    }, []);
+
+    // UID, якому дозволено доступ
+    const allowedUID = '9BmZeeNofHXK8yNKduUgPPeKJoZ2';
+
+    // Перевірка доступу
+    if (!user || user.uid !== allowedUID) {
+        return (
+            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                <h2>Ви не маєте прав доступу до цієї сторінки.</h2>
+            </div>
+        );
+    }
 
     const handleOptionChange = (index, value) => {
         const newOptions = [...options];
@@ -152,7 +172,7 @@ const Plus1 = () => {
                     </div>
 
                     {/* Контейнер для полів вводу */}
-                    <div style={{width: 316, marginTop: 410}}> {/* Додаємо marginTop */}
+                    <div style={{width: 316, marginTop: 410, position: 'relative'}}> {/* Додаємо marginTop */}
                         <input
                             type="text"
                             placeholder="Запитання"
