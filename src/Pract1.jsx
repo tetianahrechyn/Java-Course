@@ -1,28 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import javaImage from './images/java11.png';
-import logo from './images/logo.png'; // Оновлений імпорт зображення
+import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import About from './About';
-import Our from './Our'; // Імпорт нового компонента
-import Log from './Log';
-import Sign from './Sign';
-import Learn from './learn';
+import { Link } from 'react-router-dom';
 import outImage from './images/out.png';
-import theImage from './images/the.png';
-import praImage from './images/pra.png';
 import {auth, database} from './firebase'; // Імпорт бази даних
-import { ref, onValue } from 'firebase/database';
-import { getDoc, doc, setDoc } from 'firebase/firestore';
-import plusImage from './images/plus.png';
-import Theory1Page from "./Theory1";
+import { ref, onValue, set } from 'firebase/database';
 import {signOut} from "firebase/auth";
+import userImage from './images/user.png';
 
 const Pact1 = () => {
     const [questions, setQuestions] = useState([]);
-    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [selectedAnswers, setSelectedAnswers] = useState([]);
     const [result, setResult] = useState("");
     const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
+    const [userId, setUserId] = useState(null);
+    const [testResults, setTestResults] = useState([]);
+    const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+    const [isFinished, setIsFinished] = useState(false);
+
 
 
     useEffect(() => {
@@ -35,26 +31,43 @@ const Pact1 = () => {
             }
             setQuestions(questionsList);
         });
+        const user = auth.currentUser;
+        if (user) {
+            setUserId(user.uid);
+        }
     }, []);
+
+
 
     const questionData = questions[selectedQuestionIndex];
 
     const handleAnswerSelect = (option) => {
-        setSelectedAnswer(option);
+        setSelectedAnswers((prev) =>
+            prev.includes(option) ? prev.filter((answer) => answer !== option) : [...prev, option]
+        );
+        setIsAnswerChecked(false);
     };
 
     const checkAnswer = () => {
-        if (questionData && selectedAnswer) {
-            const isCorrect = selectedAnswer.trim() === questionData.correctAnswer.trim();
+        if (questionData && selectedAnswers.length > 0) {
+            const isCorrect = selectedAnswers.every((answer) => questionData.correctAnswers.includes(answer.trim()))
+                && selectedAnswers.length === questionData.correctAnswers.length;
             setResult(isCorrect ? "Правильна відповідь!" : "Неправильна відповідь!");
+            saveTestResult(isCorrect);
+            setIsAnswerChecked(true);
         } else {
             setResult("Будь ласка, виберіть відповідь перед перевіркою.");
         }
     };
 
     const nextQuestion = () => {
-        setSelectedAnswer(null);
+        if (!isAnswerChecked) {
+            alert("Будь ласка, перевірте відповідь перед переходом до наступного питання.");
+            return;
+        }
+        setSelectedAnswers([]);
         setResult("");
+        setIsAnswerChecked(false);
         setSelectedQuestionIndex((prevIndex) => prevIndex + 1);
     };
     const handleLogout = async () => {
@@ -66,16 +79,52 @@ const Pact1 = () => {
             alert("Сталася помилка, спробуйте ще раз."); // Обробка помилки
         }
     };
+
+    const saveTestResult = (isCorrect) => {
+        if (userId) {
+            const currentResult = {
+                question: questionData.question,
+                selectedAnswers,
+                isCorrect,
+                timestamp: new Date().toISOString(),
+            };
+            setTestResults((prevResults) => [...prevResults, currentResult]);
+        }
+    };
+
+    const finishTest = () => {
+        if (!isAnswerChecked) {
+            alert("Будь ласка, перевірте відповідь перед завершенням тесту.");
+            return;
+        }
+
+        if (userId && testResults.length > 0) {
+            const correct = testResults.filter(result => result.isCorrect).length;
+            const total = testResults.length;
+            const percentage = Math.round((correct / total) * 100);
+
+            const resultsRef = ref(database, 'testResults/' + userId);
+            set(resultsRef, {
+                percentage,
+                results: testResults,
+            });
+
+            alert(`Правильних відповідей: ${correct} з ${total}\nПроцент правильних відповідей: ${percentage}%`);
+            setIsFinished(true); // якщо ти хочеш сховати решту інтерфейсу після цього
+        }
+    };
+
+
     return (
         <div style={{width: '100%', height: '100%', position: 'relative', background: '#F4F2F6'}}>
-            <div style={{width: 1709, height: 934, position: 'absolute', left: 0, top: 94}}>
+            <div style={{width: 1440, height: 934, position: 'absolute', left: 0, top: 94}}>
                 <div style={{width: 1440, height: 1000, background: '#F4F2F6'}}/>
                 <div style={{width: 580, height: 393, position: 'absolute', left: 92, top: 217}}>
                 </div>
 
                 <div
                     style={{
-                        width: '100%',
+                        width: 500,
                         height: '100%',
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
@@ -83,7 +132,7 @@ const Pact1 = () => {
                         gap: 16,
                         display: 'inline-flex',
                         position: 'absolute',
-                        left: 600, // Це може бути будь-яке значення, яке ви хочете
+                        left: 600,
                         top: -78,
                     }}
                 >
@@ -156,48 +205,37 @@ const Pact1 = () => {
                         />
                     </div>
 
-                    <div style={{ width: 316, marginTop: 350, zIndex: 10  }}>
+                    <div style={{ width: 316, height: 1, zIndex: 10 }}>
                         {questionData && (
-                            <div style={{
-                                width: '100%', padding: '16px', fontSize: 14, fontFamily: 'Poppins',
-                                border: '1px solid #79747E', borderRadius: 6, backgroundColor: 'white', marginBottom: 20
-                            }}>
+                            <div style={{ width: '100%', padding: '16px', fontSize: 14, fontFamily: 'Poppins', border: '1px solid #79747E', borderRadius: 6, backgroundColor: 'white', marginBottom: 20, marginTop: -110 }}>
                                 {questionData.question}
                             </div>
                         )}
                         {questionData && questionData.options.map((option, index) => (
-                            <div key={index} onClick={() => handleAnswerSelect(option)} style={{
-                                padding: '16px', fontSize: 14, fontFamily: 'Poppins', borderRadius: 6,
-                                backgroundColor: selectedAnswer === option ? '#EDE7F6' : 'white', marginBottom: 10,
-                                cursor: 'pointer'
-                            }}>
+                            <div key={index} onClick={() => handleAnswerSelect(option)} style={{ padding: '16px', fontSize: 14, fontFamily: 'Poppins', borderRadius: 6, backgroundColor: selectedAnswers.includes(option) ? '#EDE7F6' : 'white', marginBottom: 10, cursor: 'pointer' }}>
                                 {option}
                             </div>
                         ))}
-                        <button onClick={checkAnswer} style={{
-                            width: 196, height: 64, background: '#7C4EE4', borderRadius: 50, color: 'white',
-                            fontSize: 25, fontFamily: 'Poppins', fontWeight: '500'
-                        }}>
+                        <button onClick={checkAnswer} style={{ width: 196, height: 64, background: '#7C4EE4', borderRadius: 50, color: 'white', fontSize: 25, fontFamily: 'Poppins', fontWeight: '500' }}>
                             Перевірити
                         </button>
                         {result && (
-                            <div style={{
-                                marginTop: 20, fontSize: 18,
-                                color: result.includes("Правильна") ? 'green' : 'red'
-                            }}>
+                            <div style={{ marginTop: 20, fontSize: 18, color: result.includes("Правильна") ? 'green' : 'red' }}>
                                 {result}
                             </div>
                         )}
                         {selectedQuestionIndex < questions.length - 1 && (
-                            <button onClick={nextQuestion} style={{
-                                width: 196, height: 64, background: '#7C4EE4', borderRadius: 50, color: 'white',
-                                fontSize: 25, fontFamily: 'Poppins', fontWeight: '500', marginTop: 20
-                            }}>
+                            <button onClick={nextQuestion} style={{ width: 196, height: 64, background: '#7C4EE4', borderRadius: 50, color: 'white', fontSize: 25, fontFamily: 'Poppins', fontWeight: '500', marginTop: 20 }}>
                                 Наступне питання
                             </button>
                         )}
-                        </div>
+                        {selectedQuestionIndex === questions.length - 1 && (
+                            <button onClick={finishTest} style={{ width: 196, height: 64, background: '#7C4EE4', borderRadius: 50, color: 'white', fontSize: 25, fontFamily: 'Poppins', fontWeight: '500', marginTop: 20 }}>
+                                Завершити тестування
+                            </button>
+                        )}
                     </div>
+                </div>
 
                 <Link to="/">
                     <img
@@ -214,7 +252,22 @@ const Pact1 = () => {
                     />
                 </Link>
 
+                <Link to="/user">
+                    <img
+                        src={userImage}
+                        alt="user"
+                        style={{
+                            width: '43.851px',
+                            height: '43.804px',
+                            position: 'absolute',
+                            left: 980,
+                            top: -70,
+                            textDecoration: 'none'
+                        }}
+                    />
+                </Link>
 
+                <Link to="/" >
                 <img
                     src={logo}
                     alt="Лого"
@@ -224,11 +277,13 @@ const Pact1 = () => {
                         position: 'absolute',
                         left: 90,
                         top: -70,
+                        textDecoration: 'none',
                     }}
                 />
+                </Link>
 
                 {/* Додавання тексту "from Zero" та "to Hero" біля логотипу */}
-                <div style={{
+                    <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -237,12 +292,13 @@ const Pact1 = () => {
                     position: 'absolute',
                     left: 160,
                     top: -47,
+                    textDecoration: 'none',
                     transform: 'translateY(-50%)',
                     zIndex: 2,
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                    </Link>
 
                 {/* Додавання тексту "Про нас" біля логотипу */}
                 <Link to="/about" style={{
@@ -278,7 +334,7 @@ const Pact1 = () => {
                     Наш курс
                 </Link>
 
-
+                <Link to="/" >
                 <img
                     src={newLogo}
                     alt="Новий логотип"
@@ -289,11 +345,13 @@ const Pact1 = () => {
                         left: 700,
                         top: 1100,
                         zIndex: 2,
+                        textDecoration: 'none',
                     }}
                 />
+            </Link>
 
                 {/* Додавання тексту "from Zero" та "to Hero" під новим логотипом */}
-                <div style={{
+                <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -304,10 +362,11 @@ const Pact1 = () => {
                     top: 1100,
                     transform: 'translateX(-50%)',
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                </Link>
 
                 <div style={{width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 1100}}/>
                 <div style={{
@@ -319,7 +378,7 @@ const Pact1 = () => {
                     position: 'absolute',
                     left: 565,
                     top: 1419,
-                }}>Copyright Ideapeel Inc © 2024. All Right Reserved
+                }}>Copyright Ideapeel Inc © 2025. All Right Reserved
                 </div>
             </div>
             {/* Новий блок з текстом під новим логотипом */}
@@ -338,7 +397,7 @@ const Pact1 = () => {
                 }}>
                     Про нас
                 </Link>
-                <div style={{
+                <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
                     top: 45,
@@ -347,10 +406,11 @@ const Pact1 = () => {
                     fontFamily: 'Raleway',
                     fontWeight: '400',
                     lineHeight: 24,
-                    wordWrap: 'break-word'
+                    wordWrap: 'break-word',
+                    textDecoration: 'none',
                 }}>
                     Залишити відгук
-                </div>
+                </Link>
                 <Link to="/" style={{
                     position: 'absolute',
                     left: 450,

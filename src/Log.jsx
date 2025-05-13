@@ -1,7 +1,6 @@
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link, useNavigate } from 'react-router-dom';
-import javaImage from "./images/java11.png";
 import React, { useState } from 'react'; // Додано useState
 import { auth } from './firebase'; // Імпорт auth з firebase.js
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Імпорт функції для входу
@@ -35,13 +34,14 @@ const Log = () => {
     };
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', top: -105, background: '#F4F2F6' }}>
-            <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
+            <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
 
                 {/* Фон */}
                 <div style={{ width: 1440, height: 796, background: '#F4F2F6' }} />
 
                 {/* Логотип та текст "from Zero" та "to Hero" на фоні F4F2F6 */}
                 <div style={{ background: '#F4F2F6', position: 'relative', zIndex: 2 }}>
+                    <Link to="/" >
                     <img
                         src={logo}
                         alt="Лого"
@@ -51,11 +51,13 @@ const Log = () => {
                             position: 'absolute',
                             left: 90,
                             top: -760,
-                            zIndex: 3
+                            zIndex: 3,
+                            textDecoration: 'none',
                         }}
                     />
+                    </Link>
 
-                    <div style={{
+                    <Link to="/" style={{
                         textAlign: 'center',
                         color: '#333333',
                         fontSize: 20,
@@ -65,11 +67,12 @@ const Log = () => {
                         left: 160,
                         top: -737,
                         transform: 'translateY(-50%)',
-                        zIndex: 3
+                        zIndex: 3,
+                        textDecoration: 'none',
                     }}>
                         <div>from Zero</div>
                         <div>to Hero</div>
-                    </div>
+                    </Link>
 
 
                     <div style={{
@@ -226,30 +229,6 @@ const Log = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div style={{
-                                justifyContent: 'flex-start',
-                                alignItems: 'center',
-                                gap: 252,
-                                display: 'inline-flex'
-                            }}>
-                                <div style={{
-                                    justifyContent: 'flex-start',
-                                    alignItems: 'center',
-                                    gap: 8,
-                                    display: 'flex'
-                                }}>
-                                    <div style={{ width: 24, height: 24, position: 'relative' }}>
-                                        <div style={{ width: 18, height: 18, left: 3, top: 3, position: 'absolute', border: '2px #313131 solid' }}></div>
-                                    </div>
-                                    <div style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}>Запам’ятати мене</div>
-                                </div>
-                                <div style={{ textAlign: 'right' }}>
-                                    <span style={{ color: '#FF8682', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}> </span>
-                                    <span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}>Забули</span>
-                                    <span style={{ color: '#FF8682', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}> </span>
-                                    <span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}>пароль</span>
-                                </div>
-                            </div>
 
                             <div style={{
                                 width: 510,
@@ -263,7 +242,7 @@ const Log = () => {
                                 border: '1px #79747E solid',
                                 cursor: 'pointer',
                                 marginTop: 16,
-                            }} onClick={handleLogin}> {/* Виправлено: обробник події переміщено сюди */}
+                            }} onClick={handleLogin}> {/* обробник події переміщено сюди */}
                                 <div style={{ color: '#F3F3F3', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Увійти</div>
                             </div>
 
@@ -292,6 +271,7 @@ const Log = () => {
                 </div>
 
                 {/* Новий логотип та текст під ним */}
+                <Link to="/" >
                 <img
                     src={newLogo}
                     alt="Новий логотип"
@@ -302,10 +282,12 @@ const Log = () => {
                         left: 700,
                         top: 900,
                         zIndex: 2,
+                        textDecoration: 'none',
                     }}
                 />
+                </Link>
 
-                <div style={{
+                <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -316,10 +298,11 @@ const Log = () => {
                     top: 900,
                     transform: 'translateX(-50%)',
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                </Link>
 
                 {/* Додатковий контент */}
                 <div style={{ width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 890 }} />
@@ -332,7 +315,7 @@ const Log = () => {
                     position: 'absolute',
                     left: 565,
                     top: 1209,
-                }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
+                }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
             </div>
 
             {/* Блок з текстом під новим логотипом */}
@@ -363,7 +346,7 @@ const Log = () => {
                 }}>
                     Про нас
                 </Link>
-                <div style={{
+                <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
                     top: 45,
@@ -372,9 +355,10 @@ const Log = () => {
                     fontFamily: 'Raleway',
                     fontWeight: '400',
                     lineHeight: 24,
+                    textDecoration: 'none',
                 }}>
                     Залишити відгук
-                </div>
+                </Link>
                 <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
             </div>
         </div>

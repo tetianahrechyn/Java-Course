@@ -7,6 +7,7 @@ const config = {
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: 'app.js',
+        clean: true, // очищає dist перед новим побудуванням
     },
     plugins: [
         new CopyWebpackPlugin({
@@ -20,6 +21,7 @@ const config = {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../templates/index.html'),
+            filename: 'index.html', // Явно визначити ім'я вихідного файлу
         }),
     ],
     module: {
@@ -37,14 +39,14 @@ const config = {
                 ],
             },
             {
-                test: /\.(png|jpe?g|gif|svg)$/i,  // Лоадер для зображень
+                test: /\.(png|jpe?g|gif|svg)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'images/[hash][ext][query]',  // Налаштування шляхів
+                    filename: 'images/[hash][ext][query]',
                 },
             },
             {
-                test: /\.css$/i,  // Лоадер для CSS
+                test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
         ],

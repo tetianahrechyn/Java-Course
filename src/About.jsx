@@ -9,7 +9,7 @@ import containerImage from './images/Container.png';
 const About = () => {
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
-            <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
+            <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
                 <div style={{ width: 1440, height: 1900, background: '#F4F2F6' }} />
                 <div style={{
                     color: '#666666',
@@ -132,7 +132,7 @@ const About = () => {
                         width: 400,
                         height: 408,
                         left: 110,
-                        top: -520, // Зменште значення, щоб підняти блок вгору
+                        top: -520,
                         position: 'absolute',
                         background: '#7C4EE4',
                         borderRadius: 16
@@ -316,7 +316,7 @@ const About = () => {
                         display: 'inline-flex',
                         position: 'absolute',
                         left: 1020,
-                        top: -295, // Відстань від верху (можете змінити за потреби)
+                        top: -295,
                     }}>
                         <Link to="/sign" style={{
                             textAlign: 'center',
@@ -330,22 +330,20 @@ const About = () => {
                         }}>Зареєструватися</Link>
                     </div>
                 </div>
-
+                <Link to="/" style={{ position: 'absolute', left: 90, top: -70 }}>
                 <img
                     src={logo}
                     alt="Лого"
                     style={{
                         width: '43.851px',
                         height: '43.804px',
-                        position: 'absolute',
-                        left: 90,  // Відстань від лівого краю
-                        top: -70,   // Відстань від верхнього краю
                         flexShrink: 0,
+                        textDecoration: 'none',
                     }}
                 />
-
+                </Link>
                 {/* Додавання тексту "from Zero" та "to Hero" біля логотипу */}
-                <div style={{
+                <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -356,10 +354,11 @@ const About = () => {
                     top: -47,   // Відстань від верхнього краю
                     transform: 'translateY(-50%)', // Центруємо текст по вертикалі
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                </Link>
 
                 {/* Додавання тексту "Про нас" біля логотипу */}
                 <div style={{
@@ -414,21 +413,20 @@ const About = () => {
                     Увійти
                 </Link>
 
+                <Link to="/" style={{ position: 'absolute', left: 700, top: 2010, zIndex: 2 }}>
                 <img
                     src={newLogo}
                     alt="Новий"
                     style={{
                         width: '43.851px',
                         height: '43.804px',
-                        position: 'absolute',
-                        left: 700,  // Відстань від лівого краю
-                        top: 2010,   // Відстань від верхнього краю
-                        zIndex: 2, // Додайте zIndex
+                        textDecoration: 'none',
                     }}
                 />
+                </Link>
 
                 {/* Додавання тексту "from Zero" та "to Hero" під новим логотипом */}
-                <div style={{
+                <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -439,10 +437,12 @@ const About = () => {
                     top: 2010,   // Відстань від верхнього краю
                     transform: 'translateX(-50%)', // Центруємо текст по горизонталі
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                </Link>
+
 
                 <div style={{ width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 2000 }} />
                 <div style={{
@@ -453,8 +453,8 @@ const About = () => {
                     lineHeight: '24px',
                     position: 'absolute',
                     left: 565,
-                    top: 2335, // Це значення потрібно зменшити
-                }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
+                    top: 2335,
+                }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
             </div>
 
             {/* Новий блок з текстом під новим логотипом */}
@@ -487,7 +487,7 @@ const About = () => {
                 }}>
                     Про нас
                 </Link>
-                <div style={{
+                <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
                     top: 1173,
@@ -496,10 +496,11 @@ const About = () => {
                     fontFamily: 'Raleway',
                     fontWeight: '400',
                     lineHeight: 24,
-                    wordWrap: 'break-word'
+                    wordWrap: 'break-word',
+                    textDecoration: 'none',
                 }}>
                     Залишити відгук
-                </div>
+                </Link>
                 {/* Додано рамка під текстом */}
                 <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 1467, right: '10%', left: '8%' }}></div>
             </div>

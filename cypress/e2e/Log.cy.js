@@ -10,8 +10,8 @@ describe('Log In Component', () => {
     });
 
     it('повинен успішно ввійти та переспрямувати', () => {
-        const email = 'test@example.com'; // Введіть дійсну електронну пошту
-        const password = 'password123'; // Введіть дійсний пароль
+        const email = 'test@example.com'; //
+        const password = 'password123'; //
 
         cy.get('input[type="email"]').type(email);
         cy.get('input[type="password"]').type(password);

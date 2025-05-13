@@ -1,24 +1,39 @@
-import javaImage from './images/java11.png';
 import logo from './images/logo.png'; // Оновлений імпорт зображення
 import newLogo from './images/newLogo.png';
-import { BrowserRouter as Router, Route, Routes, Link, Redirect, useNavigate } from 'react-router-dom';
-import About from './About';
-import Our from './Our'; // Імпорт нового компонента
-import Log from './Log';
-import Sign from './Sign';
-import Learn from './learn';
+import { Link, useNavigate } from 'react-router-dom';
+import { ref, onValue, set } from 'firebase/database';
+import {auth, database} from './firebase'; // Імпорт бази даних
 import React, { useEffect, useState } from 'react';
-import { auth } from './firebase'; // Імпортуємо auth
 import { onAuthStateChanged } from 'firebase/auth';
 import outImage from './images/out.png';
 import theImage from './images/the.png';
 import praImage from './images/pra.png';
+import userImage from './images/user.png';
 import plusImage from './images/plus.png';
-import Theory1Page from "./Theory1";
 import { signOut } from "firebase/auth";
-import { useAuth } from './AuthContext';
+import check from './images/check.png';
+import prog from './images/prog.png';
 
 const LearnPage = () => {
+    const [testResult, setTestResult] = useState(null);
+    const [percentage, setPercentage] = useState(0);
+
+    useEffect(() => {
+        const user = auth.currentUser;
+        if (user) {
+            const userId = user.uid;
+            const testResultsRef = ref(database, 'testResults/' + userId);
+
+            onValue(testResultsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const { percentage } = data;
+                    setTestResult(data);
+                    setPercentage(percentage);
+                }
+            });
+        }
+    }, []);
 
     const [user, setUser] = useState(null);
     const navigate = useNavigate(); // Використовуємо useNavigate для перенаправлення
@@ -27,7 +42,6 @@ const LearnPage = () => {
         try {
             await signOut(auth); // Вихід з акаунту
             console.log("Користувача виведено з системи");
-            // Можливо, ви хочете перенаправити користувача на сторінку входу або додати іншу логіку
         } catch (error) {
             console.error("Помилка при виході:", error);
         }
@@ -43,11 +57,11 @@ const LearnPage = () => {
             }
         });
 
-        return () => unsubscribe(); // Очистка підписки на unmount
+        return () => unsubscribe();
     }, [navigate]);
     return (
     <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
-        <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
+        <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
             <div style={{ width: 1440, height: 796, background: '#F4F2F6' }} />
             <div style={{ width: 580, height: 393, position: 'absolute', left: 92, top: 217 }}>
             </div>
@@ -62,9 +76,9 @@ const LearnPage = () => {
                 wordWrap: 'break-word',
                 position: 'absolute',
                 top: -100,
-                left: 680,
+                left: 700,
             }}>
-                ОСНОВНІ ПОНЯТТЯ
+                ВСТУП ДО JAVA
             </div>
             <div style={{
                 color: '#333333',
@@ -99,6 +113,19 @@ const LearnPage = () => {
                 />
             </Link>
 
+            <Link to="/user" style={{ textDecoration: 'none' }}>
+                <img
+                    src={userImage}
+                    alt="user"
+                    style={{
+                        width: '43.851px',
+                        height: '43.804px',
+                        position: 'absolute',
+                        left: '980px',
+                        top: '-70px'
+                    }}
+                />
+            </Link>
 
 
             <img
@@ -117,7 +144,7 @@ const LearnPage = () => {
             <Link to="/theory1" style={{
                 color: '#7C4EE4',
                 fontSize: 20,
-                fontFamily: 'Raleway, sans-serif', // Виправлено шрифт
+                fontFamily: 'Raleway, sans-serif',
                 fontWeight: 700,
                 lineHeight: '27px', // Встановлено правильний формат
                 wordWrap: 'break-word',
@@ -196,52 +223,128 @@ const LearnPage = () => {
                 Практика
             </Link>
 
-            <div style={{
-                color: '#7A7A7A',
-                fontSize: 16,
-                fontFamily: 'Raleway',
-                fontWeight: '500',
-                lineHeight: '1.4', // Встановлюємо висоту рядка для кращого контролю
-                wordWrap: 'break-word',
-                position: 'absolute',
-                left: 1041, // Вирівнюємо по лівому краю логотипу
-                top: 540,
-                letterSpacing: '0.6px',
-                textAlign: 'center',
-            }}>
-                <div style={{ margin: 0 }}> {/* Зменшили margin для верхнього тексту */}
-                    Дана функція доступна тільки адміну
-                </div>
-            </div>
+            {percentage >= 80 && (
+                <img src={check} alt="Галочка"
+                     style={{
+                         width: 40,
+                         height: 40,
+                         position: 'absolute',
+                         left: 820,
+                         top: 478,
+                     }}
+                />
+            )}
 
-            <img
-                src={plusImage}
-                alt="out"
-                style={{
-                    width: '150px',
-                    height: '150px',
-                    position: 'absolute',
-                    left: 1110,
-                    top: 340,
-                }}
-            />
+            {user?.uid === '9BmZeeNofHXK8yNKduUgPPeKJoZ2' ? (
+                <>
+                    <div style={{
+                        color: '#7A7A7A',
+                        fontSize: 16,
+                        fontFamily: 'Raleway',
+                        fontWeight: '500',
+                        lineHeight: '1.4',
+                        wordWrap: 'break-word',
+                        position: 'absolute',
+                        left: 1041,
+                        top: 540,
+                        letterSpacing: '0.6px',
+                        textAlign: 'center',
+                    }}>
+                        <div style={{ margin: 0 }}>
+                            Дана функція доступна тільки адміну
+                        </div>
+                    </div>
+                    <img
+                        src={plusImage}
+                        alt="out"
+                        style={{
+                            width: '150px',
+                            height: '150px',
+                            position: 'absolute',
+                            left: 1110,
+                            top: 340,
+                        }}
+                    />
 
-            <Link to="/plus1" style={{
-                color: '#7C4EE4',
-                fontSize: 20,
-                fontFamily: 'Raleway, sans-serif', // Виправлено шрифт
-                fontWeight: 700,
-                lineHeight: '27px', // Встановлено правильний формат
-                wordWrap: 'break-word',
-                position: 'absolute',
-                left: 1125, // Вирівнюємо по лівому краю логотипу
-                top: 490,
-                textDecoration: 'none'
-            }}>
-                Додати тест
-            </Link>
+                    <Link to="/plus1" style={{
+                        color: '#7C4EE4',
+                        fontSize: 20,
+                        fontFamily: 'Raleway, sans-serif',
+                        fontWeight: 700,
+                        lineHeight: '27px',
+                        wordWrap: 'break-word',
+                        position: 'absolute',
+                        left: 1085,
+                        top: 490,
+                        textDecoration: 'none'
+                    }}>
+                        Додати тест
+                    </Link>
+
+                    <Link to="/plust1" style={{
+                        color: '#7C4EE4',
+                        fontSize: 20,
+                        fontFamily: 'Raleway, sans-serif',
+                        fontWeight: 700,
+                        lineHeight: '27px',
+                        wordWrap: 'break-word',
+                        position: 'absolute',
+                        left: 1210,
+                        top: 490,
+                        textDecoration: 'none'
+                    }}>
+                        / теорію
+                    </Link>
+                </>
+            ) : (
+                <>
+                    <img
+                        src={prog}
+                        alt="prog"
+                        style={{
+                            width: '100px',
+                            height: '100px',
+                            position: 'absolute',
+                            left: 1110,
+                            top: 360,
+                        }}
+                    />
+                    <Link to="/progress" style={{
+                        color: '#7C4EE4',
+                        fontSize: 20,
+                        fontFamily: 'Raleway, sans-serif',
+                        fontWeight: 700,
+                        lineHeight: '27px',
+                        wordWrap: 'break-word',
+                        position: 'absolute',
+                        left: 1085,
+                        top: 490,
+                        textDecoration: 'none'
+                    }}>
+                        Ваші результати
+                    </Link>
+                    <div style={{
+                        color: '#7A7A7A',
+                        fontSize: 16,
+                        fontFamily: 'Raleway',
+                        fontWeight: '500',
+                        lineHeight: '1.4',
+                        wordWrap: 'break-word',
+                        position: 'absolute',
+                        left: 1041,
+                        top: 540,
+                        letterSpacing: '0.6px',
+                        textAlign: 'center',
+                    }}>
+                        <div style={{ margin: 0 }}>
+                            Тут ви можете побачити свій прогрес
+                        </div>
+                    </div>
+                </>
+            )}
 
 
+            <Link to="/" >
             <img
                 src={logo}
                 alt="Лого"
@@ -251,11 +354,13 @@ const LearnPage = () => {
                     position: 'absolute',
                     left: 90,
                     top: -70,
+                    textDecoration: 'none',
                 }}
             />
+            </Link>
 
             {/* Додавання тексту "from Zero" та "to Hero" біля логотипу */}
-            <div style={{
+                <Link to="/" style={{
                 textAlign: 'center',
                 color: '#333333',
                 fontSize: 20,
@@ -266,10 +371,11 @@ const LearnPage = () => {
                 top: -47,
                 transform: 'translateY(-50%)',
                 zIndex: 2,
+                textDecoration: 'none',
             }}>
                 <div>from Zero</div>
                 <div>to Hero</div>
-            </div>
+                </Link>
 
             {/* Додавання тексту "Про нас" біля логотипу */}
             <Link to="/about" style={{
@@ -305,8 +411,7 @@ const LearnPage = () => {
                 Наш курс
             </Link>
 
-
-
+                <Link to="/" >
             <img
                 src={newLogo}
                 alt="Новий логотип"
@@ -317,11 +422,13 @@ const LearnPage = () => {
                     left: 700,
                     top: 900,
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}
             />
+                </Link>
 
             {/* Додавання тексту "from Zero" та "to Hero" під новим логотипом */}
-            <div style={{
+                    <Link to="/" style={{
                 textAlign: 'center',
                 color: '#333333',
                 fontSize: 20,
@@ -332,10 +439,11 @@ const LearnPage = () => {
                 top: 900,
                 transform: 'translateX(-50%)',
                 zIndex: 2,
+                textDecoration: 'none',
             }}>
                 <div>from Zero</div>
                 <div>to Hero</div>
-            </div>
+                    </Link>
 
             <div style={{ width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 890 }} />
             <div style={{
@@ -347,7 +455,7 @@ const LearnPage = () => {
                 position: 'absolute',
                 left: 565,
                 top: 1209,
-            }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
+            }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
         </div>
         {/* Новий блок з текстом під новим логотипом */}
         <div style={{ width: '100%', height: '100%', position: 'relative', top: 890 }}>
@@ -365,7 +473,7 @@ const LearnPage = () => {
             }}>
                 Про нас
             </Link>
-            <div style={{
+            <Link to="/reviews" style={{
                 position: 'absolute',
                 left: 969,
                 top: 45,
@@ -374,10 +482,11 @@ const LearnPage = () => {
                 fontFamily: 'Raleway',
                 fontWeight: '400',
                 lineHeight: 24,
-                wordWrap: 'break-word'
+                wordWrap: 'break-word',
+                textDecoration: 'none',
             }}>
                 Залишити відгук
-            </div>
+            </Link>
             <Link to="/" style={{
                 position: 'absolute',
                 left: 450,

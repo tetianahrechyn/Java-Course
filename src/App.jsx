@@ -8,15 +8,58 @@ import Our from './Our'; // Імпорт нового компонента
 import Log from './Log';
 import Sign from './Sign';
 import Learn from './learn';
-import { AuthProvider } from './AuthContext';
 import Theory1Page from "./Theory1";
 import Pract1Page from "./Pract1";
 import Plus1Page from "./Plus1";
-import NotFound from './NotFound';
+import Plust1Page from "./Plust1";
+import Operators from "./Operators";
+import OperatorsTheory from "./OperatorsTheory";
+import OperatorsPlus from "./OperatorsPlus";
+import OperatorsPract from "./OperatorsPract";
+import OperatorsPlusTheory from "./OperatorsPlusTheory";
+import AddReviews from "./vidhyki";
+import Reviews from "./statictikaReviews";
+import User from "./user";
+import Variables from "./Variables";
+import VariablesTheory from "./VariablesTheory";
+import VariablesPlus from "./VariablesPlus";
+import VariablesPract from "./VariablesPract";
+import VariablesPlusTheory from "./VariablesPlusTheory";
+import ExStatemetnsBlock from "./ExStatemetnsBlock";
+import ExStatemetnsBlockTheory from "./ExStatemetnsBlockTheory";
+import ExStatemetnsBlockPlus from "./ExStatemetnsBlockPlus";
+import ExStatemetnsBlockPract from "./ExStatemetnsBlockPract";
+import ExStatemetnsBlockPlusTheory from "./ExStatemetnsBlockPlusTheory";
+import HelloWorldPlus from "./HelloWorldPlus";
+import HelloWorldTheory from "./HelloWorldTheory";
+import HelloWorld from "./HelloWorld";
+import HelloWorldPract from "./HelloWorldPract";
+import HelloWorldPlusTheory from "./HelloWorldPlusTheory";
+import InputAndOutput from "./InputAndOutput";
+import InputAndOutputTheory from "./InputAndOutputTheory";
+import InputAndOutputPlus from "./InputAndOutputPlus";
+import InputAndOutputPract from "./InputAndOutputPract";
+import InputAndOutputPlusTheory from "./InputAndOutputPlusTheory";
+import Literals from "./Literals";
+import LiteralsTheory from "./LiteralsTheory";
+import LiteralsPlus from "./LiteralsPlus";
+import LiteralsPract from "./LiteralsPract";
+import LiteralsPlusTheory from "./LiteralsPlusTheory";
+import Primitive from "./Primitive";
+import PrimitiveTheory from "./PrimitiveTheory";
+import PrimitivePlus from "./PrimitivePlus";
+import PrimitivePract from "./PrimitivePract";
+import PrimitivePlusTheory from "./PrimitivePlusTheory";
+import Comments from "./Сomments";
+import CommentsPract from "./СommentsPract";
+import CommentsPlus from "./СommentsPlus";
+import CommentsTheory from "./СommentsTheory";
+import CommentsPlusTheory from "./СommentsPlusTheory";
+import Progress from "./Progress";
 
 const HomePage = () => (
     <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
-        <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
+        <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
             <div style={{ width: 1440, height: 796, background: '#7C4EE4' }} />
             <div style={{ width: 580, height: 393, position: 'absolute', left: 92, top: 217 }}>
                 <h1 style={{
@@ -212,7 +255,7 @@ const HomePage = () => (
                 position: 'absolute',
                 left: 565,
                 top: 1209,
-            }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
+            }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
         </div>
         {/* Новий блок з текстом під новим логотипом */}
         <div style={{ width: '100%', height: '100%', position: 'relative', top: 890 }}>
@@ -230,7 +273,7 @@ const HomePage = () => (
             }}>
                 Про нас
             </Link>
-            <div style={{
+            <Link to="/reviews" style={{
                 position: 'absolute',
                 left: 969,
                 top: 45,
@@ -239,10 +282,11 @@ const HomePage = () => (
                 fontFamily: 'Raleway',
                 fontWeight: '400',
                 lineHeight: 24,
-                wordWrap: 'break-word'
+                wordWrap: 'break-word',
+                textDecoration: 'none',
             }}>
                 Залишити відгук
-            </div>
+            </Link>
             <div style={{
                 position: 'absolute',
                 left: 450,
@@ -269,12 +313,56 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/our" element={<Our />} />
             <Route path="/our/learn" element={<Learn />} />
+            <Route path="/operators" element={<Operators />} />
             <Route path="/log" element={<Log />} />
             <Route path="/sign" element={<Sign />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/theory1" element={<Theory1Page />} />
+            <Route path="/operatorstheory" element={<OperatorsTheory />} />
+            <Route path="/operatorsplus" element={<OperatorsPlus />} />
+            <Route path="/operatorsplustheory" element={<OperatorsPlusTheory />} />
+            <Route path="/operatorspract" element={<OperatorsPract />} />
             <Route path="/pract1" element={<Pract1Page />} />
             <Route path="/plus1" element={<Plus1Page />} />
+            <Route path="/plust1" element={<Plust1Page />} />
+            <Route path="/reviews/addreviews" element={<AddReviews />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/user" element={<User />} />
+            <Route path="/variables" element={<Variables />} />
+            <Route path="/variablestheory" element={<VariablesTheory />} />
+            <Route path="/variablesplus" element={<VariablesPlus />} />
+            <Route path="/variablesplustheory" element={<VariablesPlusTheory />} />
+            <Route path="/variablespract" element={<VariablesPract />} />
+            <Route path="/exstatemetnsblock" element={<ExStatemetnsBlock />} />
+            <Route path="/exstatemetnsblocktheory" element={<ExStatemetnsBlockTheory />} />
+            <Route path="/exstatemetnsblockplus" element={<ExStatemetnsBlockPlus />} />
+            <Route path="/exstatemetnsblockplustheory" element={<ExStatemetnsBlockPlusTheory />} />
+            <Route path="/exstatemetnsblockpract" element={<ExStatemetnsBlockPract />} />
+            <Route path="/helloworld" element={<HelloWorld />} />
+            <Route path="/helloworldtheory" element={<HelloWorldTheory />} />
+            <Route path="/helloworldplus" element={<HelloWorldPlus />} />
+            <Route path="/helloworldplustheory" element={<HelloWorldPlusTheory />} />
+            <Route path="/helloworldpract" element={<HelloWorldPract />} />
+            <Route path="/inputandoutput" element={<InputAndOutput />} />
+            <Route path="/inputandoutputtheory" element={<InputAndOutputTheory />} />
+            <Route path="/inputandoutputplus" element={<InputAndOutputPlus />} />
+            <Route path="/inputandoutputplustheory" element={<InputAndOutputPlusTheory />} />
+            <Route path="/inputandoutputpract" element={<InputAndOutputPract />} />
+            <Route path="/literals" element={<Literals />} />
+            <Route path="/literalstheory" element={<LiteralsTheory />} />
+            <Route path="/literalsplus" element={<LiteralsPlus />} />
+            <Route path="/literalsplustheory" element={<LiteralsPlusTheory />} />
+            <Route path="/literalspract" element={<LiteralsPract />} />
+            <Route path="/primitive" element={<Primitive />} />
+            <Route path="/primitivetheory" element={<PrimitiveTheory />} />
+            <Route path="/primitiveplus" element={<PrimitivePlus />} />
+            <Route path="/primitiveplustheory" element={<PrimitivePlusTheory />} />
+            <Route path="/primitivepract" element={<PrimitivePract />} />
+            <Route path="/comments" element={<Comments />} />
+            <Route path="/commentspract" element={<CommentsPract />} />
+            <Route path="/commentsplus" element={<CommentsPlus />} />
+            <Route path="/commentstheory" element={<CommentsTheory />} />
+            <Route path="/commentsplustheory" element={<CommentsPlusTheory />} />
+            <Route path="/progress" element={<Progress />} />
         </Routes>
     </Router>
 );

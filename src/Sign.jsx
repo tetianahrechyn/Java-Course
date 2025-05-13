@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link } from 'react-router-dom';
 import signImage from "./images/sign.png";
-import app from './firebase';
 import { auth } from './firebase'; // Імпортуємо auth
 
 const Sign = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(''); // Додати стан для успішного повідомлення
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleRegister = async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             console.log('Користувача успішно зареєстровано');
-            setSuccessMessage('Користувача успішно зареєстровано'); // Встановити повідомлення про успіх
+            setSuccessMessage('Користувача успішно зареєстровано');
             setError(null); // Скинути помилку, якщо вона була
         } catch (err) {
             setError(err.message);
@@ -37,13 +36,14 @@ const Sign = () => {
     }, [successMessage]);
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', top: -105, background: '#F4F2F6' }}>
-            <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
+            <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
 
                 {/* Фон */}
                 <div style={{ width: 1440, height: 796, background: '#F4F2F6' }} />
 
                 {/* Логотип та текст "from Zero" та "to Hero" на фоні F4F2F6 */}
                 <div style={{ background: '#F4F2F6', position: 'relative', zIndex: 2 }}>
+                    <Link to="/" >
                     <img
                         src={logo}
                         alt="Лого"
@@ -53,11 +53,13 @@ const Sign = () => {
                             position: 'absolute',
                             left: 1160,
                             top: -760,
-                            zIndex: 3
+                            zIndex: 3,
+                            textDecoration: 'none',
                         }}
                     />
+                    </Link>
 
-                    <div style={{
+                    <Link to="/" style={{
                         textAlign: 'center',
                         color: '#333333',
                         fontSize: 20,
@@ -67,11 +69,12 @@ const Sign = () => {
                         left: 1230,
                         top: -737,
                         transform: 'translateY(-50%)',
-                        zIndex: 3
+                        zIndex: 3,
+                        textDecoration: 'none',
                     }}>
                         <div>from Zero</div>
                         <div>to Hero</div>
-                    </div>
+                    </Link>
 
                     <div style={{
                         width: '100%',
@@ -505,6 +508,7 @@ const Sign = () => {
                 </div>
 
                 {/* Новий логотип та текст під ним */}
+                <Link to="/" >
                 <img
                     src={newLogo}
                     alt="Новий логотип"
@@ -515,10 +519,12 @@ const Sign = () => {
                         left: 700,
                         top: 900,
                         zIndex: 2,
+                        textDecoration: 'none',
                     }}
                 />
+                </Link>
 
-                <div style={{
+                    <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -529,10 +535,11 @@ const Sign = () => {
                     top: 900,
                     transform: 'translateX(-50%)',
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                    </Link>
 
                 {/* Додатковий контент */}
                 <div style={{ width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 890 }} />
@@ -545,7 +552,7 @@ const Sign = () => {
                     position: 'absolute',
                     left: 565,
                     top: 1209,
-                }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
+                }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
             </div>
 
             {/* Блок з текстом під новим логотипом */}
@@ -576,7 +583,7 @@ const Sign = () => {
                 }}>
                     Про нас
                 </Link>
-                <div style={{
+                <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
                     top: 45,
@@ -585,9 +592,10 @@ const Sign = () => {
                     fontFamily: 'Raleway',
                     fontWeight: '400',
                     lineHeight: 24,
+                    textDecoration: 'none',
                 }}>
                     Залишити відгук
-                </div>
+                </Link>
                 <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
             </div>
         </div>

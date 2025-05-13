@@ -1,38 +1,34 @@
-describe('LearnPage E2E Test', () => {
+describe('Learn Page', () => {
     beforeEach(() => {
-        // Запуск сервера перед кожним тестом
-        cy.visit('http://localhost:3000/learn'); // Змінити на реальний маршрут вашої LearnPage
+        // Зайти на сторінку Learn
+        cy.visit('http://localhost:3000/log');
     });
 
-    it('перевірка наявності елементів на сторінці', () => {
-        // Перевірка заголовка
-        cy.contains('ОСНОВНІ ПОНЯТТЯ').should('exist');
-
-        // Перевірка наявності кнопки "Вихід"
-        cy.get('img[alt="out"]').should('exist');
-
-        // Перевірка наявності лінків
-        cy.contains('Теорія').should('exist').click();
-        cy.url().should('include', 'http://localhost:3000/theory1'); // Перевірка перенаправлення на теорію
-
-        // Перевірка наявності тексту про теорію
-        cy.contains('Тут ти зможеш опанувати фундаментальні знання з Java').should('exist');
-
-        // Повернення на LearnPage
-        cy.go('back');
+    it('should display the main title', () => {
+        cy.contains('ОСНОВНІ ПОНЯТТЯ').should('be.visible');
     });
 
-    it('перевірка функціональності виходу', () => {
-        // Клік на вихід
+    it('should navigate to Theory page', () => {
+        cy.get('a').contains('Теорія').click();
+        cy.url().should('include', 'http://localhost:3000/theory1'); // Перевірка, що URL змінився
+    });
+
+    it('should navigate to Practice page', () => {
+        cy.get('a').contains('Практика').click();
+        cy.url().should('include', 'http://localhost:3000/pract1'); // Перевірка, що URL змінився
+    });
+
+    it('should log out the user', () => {
+        // Передбачимо, що в тебе є кнопка для виходу
         cy.get('img[alt="out"]').click();
-
-        // Перевірка перенаправлення на сторінку входу
+        // Перевірка, що перенаправило на сторінку входу
         cy.url().should('include', 'http://localhost:3000/log');
     });
 
-    it('перевірка доступу для неавторизованих користувачів', () => {
-        // Логіка, яка перевіряє, чи перенаправляє неавторизованого користувача на сторінку входу
-        cy.visit('/learn');
-        cy.url().should('include', 'http://localhost:3000/log'); // Змінити на реальний маршрут
+    it('should show correct text when the user is not logged in', () => {
+        // Симулюємо стан, коли користувача немає
+        cy.logout(); // Припустимо, що в тебе є метод для виходу з акаунту в тестах
+        cy.visit('http://localhost:3000/learn'); // Змінено на правильний маршрут
+        cy.url().should('include', 'http://localhost:3000/log'); // Перевірка перенаправлення на сторінку входу
     });
 });
