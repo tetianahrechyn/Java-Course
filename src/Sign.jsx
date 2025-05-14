@@ -4,7 +4,7 @@ import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link } from 'react-router-dom';
 import signImage from "./images/sign.png";
-import { auth } from './firebase'; // Імпортуємо auth
+import { auth } from './firebase';
 
 const Sign = () => {
     const [email, setEmail] = useState('');
@@ -84,9 +84,9 @@ const Sign = () => {
                         alignItems: 'flex-start',
                         gap: 16,
                         display: 'inline-flex',
-                        position: 'absolute', // Додаємо абсолютне позиціювання
-                        left: 800, // Зменшуємо значення left
-                        top: -600, // Піднімаємо значення top
+                        position: 'absolute',
+                        left: 800,
+                        top: -600,
                     }}>
                         <div style={{
                             color: '#313131',
@@ -478,12 +478,12 @@ const Sign = () => {
 
                         {/* Додано обгортку для тексту "Вже маєте обліковий запис?" */}
                             <div style={{
-                                width: 512, // Зроблено так само, як поля введення
+                                width: 512,
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 gap: 4,
-                                marginTop: 16, // Відстань до кнопки
+                                marginTop: 16,
                             }}>
                                 <span style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500' }}>Вже маєте обліковий запис? </span>
                                 <Link to="/log" style={{ textDecoration: 'none' }}>
@@ -494,16 +494,6 @@ const Sign = () => {
 
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
 
                 </div>
 

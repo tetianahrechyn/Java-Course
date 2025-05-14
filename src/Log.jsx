@@ -1,34 +1,32 @@
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react'; // Додано useState
-import { auth } from './firebase'; // Імпорт auth з firebase.js
-import { signInWithEmailAndPassword } from 'firebase/auth'; // Імпорт функції для входу
-import loginImage from './images/login.png'; // Замініть на ваш шлях до зображення
+import React, { useState } from 'react';
+import { auth } from './firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import loginImage from './images/login.png';
 
 const Log = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null); // Стан для помилок
-    const [successMessage, setSuccessMessage] = useState(''); // Стан для повідомлення про успіх
-    const navigate = useNavigate(); // Ініціалізуємо navigate
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
-            await signInWithEmailAndPassword(auth, email, password); // Виклик функції для входу
+            await signInWithEmailAndPassword(auth, email, password);
             console.log('Користувача успішно увійшов');
-            setSuccessMessage('Успішний вхід!'); // Повідомлення про успіх
-            setError(null); // Скидання помилки
+            setSuccessMessage('Успішний вхід!');
+            setError(null);
 
-            // Перенаправлення на /our/learn
             navigate('/our/learn');
 
-            // Встановлюємо таймер для скидання successMessage через 5 секунд
             setTimeout(() => {
                 setSuccessMessage('');
             }, 5000); // 5000 мілісекунд = 5 секунд
         } catch (err) {
-            setError(err.message); // Встановлення повідомлення про помилку
+            setError(err.message);
             console.error('Помилка входу:', err);
         }
     };
@@ -84,8 +82,8 @@ const Log = () => {
                         gap: 16,
                         display: 'inline-flex',
                         position: 'absolute', // Додаємо абсолютне позиціювання
-                        left: 100, // Зменшуємо значення left
-                        top: -600, // Піднімаємо значення top
+                        left: 100,
+                        top: -600,
                     }}>
                         <div style={{
                             color: '#313131',
@@ -242,7 +240,7 @@ const Log = () => {
                                 border: '1px #79747E solid',
                                 cursor: 'pointer',
                                 marginTop: 16,
-                            }} onClick={handleLogin}> {/* обробник події переміщено сюди */}
+                            }} onClick={handleLogin}>
                                 <div style={{ color: '#F3F3F3', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Увійти</div>
                             </div>
 
@@ -253,12 +251,12 @@ const Log = () => {
 
                             {/* Додано обгортку для тексту "Немає облікового запису?" */}
                             <div style={{
-                                width: 512, // Зроблено так само, як поля введення
+                                width: 512,
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 gap: 4,
-                                marginTop: 16, // Відстань до кнопки
+                                marginTop: 16,
                             }}>
                                 <span style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500' }}>Немає облікового запису? </span>
                                 <Link to="/sign" style={{ textDecoration: 'none' }}><span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Зареєструватися</span>

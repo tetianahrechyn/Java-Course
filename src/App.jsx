@@ -1,10 +1,10 @@
 import React from 'react';
 import javaImage from './images/java11.png';
-import logo from './images/logo.png'; // Оновлений імпорт зображення
+import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import About from './About';
-import Our from './Our'; // Імпорт нового компонента
+import Our from './Our';
 import Log from './Log';
 import Sign from './Sign';
 import Learn from './learn';
@@ -181,7 +181,7 @@ const HomePage = () => (
                 Про нас
             </Link>
 
-            {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
+            {/* Додавання тексту "Наш курс" під "Про нас" */}
             <Link to="/our" style={{
                 color: '#333333',
                 fontSize: 20,
@@ -198,7 +198,7 @@ const HomePage = () => (
                 Наш курс
             </Link>
 
-            {/* Додавання тексту "Увійти" під "Наш курс" з відстанню  */}
+            {/* Додавання тексту "Увійти" під "Наш курс" */}
             <Link to="/log" style={{
                 color: '#333333',
                 fontSize: 20,
@@ -300,7 +300,7 @@ const HomePage = () => (
             }}>
                 Головна сторінка
             </div>
-            {/* Додано рамка під текстом */}
+            {/* Рамка під текстом */}
             <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
         </div>
     </div>
