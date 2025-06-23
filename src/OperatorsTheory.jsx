@@ -1,14 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import bitImage from './images/bit.png';
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link } from 'react-router-dom';
 import outImage from './images/out.png';
-import palImage from './images/pal.png';
-import komImage from './images/kom.png';
-import wordImage from './images/word.png';
-import pal1Image from './images/pal1.png';
-import kom1Image from './images/kom1.png';
 import { signOut } from "firebase/auth";
 import { auth, db } from './firebase';
 import userImage from './images/user.png';

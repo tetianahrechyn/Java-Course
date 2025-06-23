@@ -12,26 +12,40 @@ const Sign = () => {
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
 
+    const firebaseErrorMessages = (code) => {
+        switch (code) {
+            case 'auth/email-already-in-use':
+                return 'Електронна пошта вже використовується.';
+            case 'auth/invalid-email':
+                return 'Неправильний формат електронної пошти.';
+            case 'auth/operation-not-allowed':
+                return 'Реєстрація заборонена. Зверніться до адміністратора.';
+            case 'auth/weak-password':
+                return 'Пароль надто простий. Введіть складніший пароль.';
+            default:
+                return 'Сталася помилка. Спробуйте пізніше.';
+        }
+    };
+
     const handleRegister = async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             console.log('Користувача успішно зареєстровано');
             setSuccessMessage('Користувача успішно зареєстровано');
-            setError(null); // Скинути помилку, якщо вона була
+            setError(null);
         } catch (err) {
-            setError(err.message);
+            setError(firebaseErrorMessages(err.code));
             console.error('Помилка реєстрації:', err);
         }
     };
 
-    // Ефект для очищення повідомлення про успіх через 10 секунд
     useEffect(() => {
         if (successMessage) {
             const timer = setTimeout(() => {
                 setSuccessMessage('');
             }, 5000); // 10 секунд
 
-            return () => clearTimeout(timer); // Очищення таймера при демонтажі або оновленні
+            return () => clearTimeout(timer);
         }
     }, [successMessage]);
     return (

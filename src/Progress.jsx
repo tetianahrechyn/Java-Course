@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { auth, database } from './firebase'; // Імпорт бази даних
-import {get, onValue, ref, set, update} from 'firebase/database'; // Імпорт функцій для запису в базу даних
-import javaImage from './images/java11.png';
-import logo from './images/logo.png'; // Оновлений імпорт зображення
+import {get, onValue, ref, off} from 'firebase/database'; // Імпорт функцій для запису в базу даних
+import signature from './images/signature.png';
+import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import outImage from './images/out.png';
@@ -57,10 +57,13 @@ const Progress = () => {
             let totalQuestions = 0;
             let loadedCount = 0;
 
+            const listeners = [];
+
             sections.forEach(section => {
                 const refPath = `${section}/${userId}`;
                 const resultsRef = ref(database, refPath);
-                onValue(resultsRef, (snapshot) => {
+
+                const unsubscribe = onValue(resultsRef, (snapshot) => {
                     const data = snapshot.val();
                     if (data && data.results) {
                         totalCorrect += data.results.filter(result => result.isCorrect).length;
@@ -71,10 +74,19 @@ const Progress = () => {
                         const calc = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
                         setPercentage(calc);
                     }
-                }, { onlyOnce: true });
+                });
+
+                listeners.push(resultsRef);
             });
+
+            return () => {
+                listeners.forEach(resultsRef => {
+                    off(resultsRef);
+                });
+            };
         }
     }, [userId]);
+
 
     const gradient = `conic-gradient(
         #C5B6F2 0%,
@@ -88,7 +100,7 @@ const Progress = () => {
         doc.internal.pageSize.width = 210; // ширина сторінки
         doc.internal.pageSize.height = 165; // висота сторінки
 
-        doc.setFillColor(244, 242, 246); // Фон
+        doc.setFillColor(255, 255, 255); // Фон
         doc.rect(0, 0, 210, 165, 'F'); // Прямокутник, що покриває всю сторінку
 
         doc.addImage(logo, 'PNG', 15, 10, 15, 15); // Логотип зліва вгорі
@@ -136,7 +148,8 @@ const Progress = () => {
 
         doc.setFontSize(10);
         doc.text('Date: ' + new Date().toLocaleDateString(), 40, 145);
-        doc.text('Instructors: TH Training', 130, 145);
+        doc.text('Signature: ', 130, 145);
+        doc.addImage(signature, 'PNG', 151, 132, 25, 23);
 
         doc.save('certificate.pdf');
     };

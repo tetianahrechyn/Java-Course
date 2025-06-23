@@ -13,6 +13,24 @@ const Log = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
 
+    const translateFirebaseError = (error) => {
+        if (!error?.code) return 'Сталася невідома помилка';
+
+        switch (error.code) {
+            case 'auth/invalid-email':
+                return 'Неправильний формат електронної пошти.';
+            case 'auth/user-not-found':
+                return 'Користувача з такою електронною поштою не знайдено.';
+            case 'auth/wrong-password':
+                return 'Невірний пароль. Спробуйте ще раз.';
+            case 'auth/too-many-requests':
+                return 'Забагато спроб входу. Будь ласка, спробуйте пізніше.';
+            default:
+                return 'Сталася помилка при вході. Перевірте дані і спробуйте знову.';
+        }
+    };
+
+
     const handleLogin = async () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
@@ -26,7 +44,7 @@ const Log = () => {
                 setSuccessMessage('');
             }, 5000); // 5000 мілісекунд = 5 секунд
         } catch (err) {
-            setError(err.message);
+            setError(translateFirebaseError(err));
             console.error('Помилка входу:', err);
         }
     };

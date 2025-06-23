@@ -10,7 +10,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { FaStar } from 'react-icons/fa';
 
-const Plus1 = () => {
+const Reviews = () => {
     const [reviewStats, setReviewStats] = useState({
         total: 0,
         average: 0,
@@ -448,4 +448,4 @@ const Plus1 = () => {
     );
 };
 
-export default Plus1;
+export default Reviews;

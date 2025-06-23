@@ -18,8 +18,8 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); // Отримання екземпляра Auth
+const auth = getAuth(app);
 const db = getFirestore(app);
-const database = getDatabase(app); // Отримання бази даних
+const database = getDatabase(app);
 const storage = getStorage(app);
-export { auth, database, db, storage }; // Експорт auth для використання в інших компонентах
+export { auth, database, db, storage };
