@@ -4,23 +4,15 @@ import { ref, set } from 'firebase/database'; // Імпорт функцій д�
 import javaImage from './images/java11.png';
 import logo from './images/logo.png'; // Оновлений імпорт зображення
 import newLogo from './images/newLogo.png';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import About from './About';
-import Our from './Our'; // Імпорт нового компонента
-import Log from './Log';
-import Sign from './Sign';
-import Learn from './learn';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import outImage from './images/out.png';
-import theImage from './images/the.png';
-import praImage from './images/pra.png';
-import plusImage from './images/plus.png';
-import Theory1Page from "./Theory1";
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import userImage from './images/user.png';
 
 const Plus1 = () => {
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['', '', '', '']);
-    const [correctAnswer, setCorrectAnswer] = useState('');
+    const [correctIndexes, setCorrectIndexes] = useState([]);
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -48,24 +40,43 @@ const Plus1 = () => {
         setOptions(newOptions);
     };
 
+    const handleCheckboxChange = (index) => {
+        if (correctIndexes.includes(index)) {
+            setCorrectIndexes(correctIndexes.filter(i => i !== index));
+        } else {
+            setCorrectIndexes([...correctIndexes, index]);
+        }
+    };
+
     const handleCreateQuestion = async () => {
-        console.log('Кнопка натиснута!');
-        console.log('Запитання:', question);
-        console.log('Варіанти:', options);
-        console.log('Правильна відповідь:', correctAnswer);
+        const trimmedQuestion = question.trim();
+        const trimmedOptions = options.map(opt => opt.trim());
+
+        if (!trimmedQuestion || trimmedOptions.some(opt => !opt) || correctIndexes.length === 0) {
+            alert('Будь ласка, заповніть усі поля та виберіть хоча б одну правильну відповідь.');
+            return;
+        }
+
+        const uniqueOptions = new Set(trimmedOptions);
+        if (uniqueOptions.size !== trimmedOptions.length) {
+            alert('Варіанти відповідей мають бути унікальними.');
+            return;
+        }
+
+        const correctAnswers = correctIndexes.map(index => trimmedOptions[index]);
 
         try {
             const questionData = {
-                question,
-                options,
-                correctAnswer,
+                question: trimmedQuestion,
+                options: trimmedOptions,
+                correctAnswers,
             };
             const questionRef = ref(database, 'questions/' + Date.now());
             await set(questionRef, questionData);
             alert('Запитання успішно створено!');
             setQuestion('');
             setOptions(['', '', '', '']);
-            setCorrectAnswer('');
+            setCorrectIndexes([]);
         } catch (error) {
             console.error('Помилка при створенні запитання:', error);
             alert('Сталася помилка, спробуйте ще раз.');
@@ -83,14 +94,14 @@ const Plus1 = () => {
     };
     return (
         <div style={{width: '100%', height: '100%', position: 'relative', background: '#F4F2F6'}}>
-            <div style={{width: 1709, height: 934, position: 'absolute', left: 0, top: 94}}>
+            <div style={{width: 1440, height: 934, position: 'absolute', left: 0, top: 94}}>
                 <div style={{width: 1440, height: 1000, background: '#F4F2F6'}}/>
                 <div style={{width: 580, height: 393, position: 'absolute', left: 92, top: 217}}>
                 </div>
 
                 <div
                     style={{
-                        width: '100%',
+                        width: 500,
                         height: '100%',
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
@@ -98,7 +109,7 @@ const Plus1 = () => {
                         gap: 16,
                         display: 'inline-flex',
                         position: 'absolute',
-                        left: 600, // Це може бути будь-яке значення, яке ви хочете
+                        left: 600,
                         top: -78,
                     }}
                 >
@@ -110,11 +121,11 @@ const Plus1 = () => {
                                     width: '100%',
                                     height: '100%',
                                     position: 'absolute',
-                                    background: '#7C4EE4',
+                                    background: '#007ACC',
                                     borderRadius: 18,
                                 }}
                             />
-                            <div style={{width: '100%', height: 56, position: 'absolute', background: '#7C4EE4'}}/>
+                            <div style={{width: '100%', height: 56, position: 'absolute', background: '#007ACC'}}/>
                         </div>
 
                         {/* Коло елементів з різними відтінками */}
@@ -136,7 +147,7 @@ const Plus1 = () => {
                                 position: 'absolute',
                                 left: 29,
                                 top: 123,
-                                background: '#C7A8FC',
+                                background: '#84CEFF',
                                 borderRadius: '50%',
                             }}
                         />
@@ -172,7 +183,7 @@ const Plus1 = () => {
                     </div>
 
                     {/* Контейнер для полів вводу */}
-                    <div style={{width: 316, marginTop: 410, position: 'relative'}}> {/* Додаємо marginTop */}
+                    <div style={{ width: 316, marginTop: -115, position: 'relative' }}>
                         <input
                             type="text"
                             placeholder="Запитання"
@@ -193,44 +204,31 @@ const Plus1 = () => {
                             }}
                         />
 
-                        {/* Відображення варіантів відповідей */}
                         {options.map((option, index) => (
-                            <input
-                                key={index}
-                                type="text"
-                                placeholder={`Варіант відповіді ${index + 1}`}
-                                value={option}
-                                onChange={(e) => handleOptionChange(index, e.target.value)}
-                                style={{
-                                    width: '100%',
-                                    height: 30,
-                                    padding: '16px',
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    border: '1px solid #79747E',
-                                    borderRadius: 6,
-                                    marginBottom: 20,
-                                    zIndex: 10,
-                                }}
-                            />
+                            <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+                                <input
+                                    type="checkbox"
+                                    checked={correctIndexes.includes(index)}
+                                    onChange={() => handleCheckboxChange(index)}
+                                    style={{ marginRight: 8 }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder={`Варіант відповіді ${index + 1}`}
+                                    value={option}
+                                    onChange={(e) => handleOptionChange(index, e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        height: 30,
+                                        padding: '16px',
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        border: '1px solid #79747E',
+                                        borderRadius: 6,
+                                    }}
+                                />
+                            </div>
                         ))}
-
-                        <input
-                            type="text"
-                            placeholder="Правильна відповідь"
-                            value={correctAnswer}
-                            onChange={(e) => setCorrectAnswer(e.target.value)}
-                            style={{
-                                width: '100%',
-                                height: 30,
-                                padding: '16px',
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                border: '1px solid #79747E',
-                                borderRadius: 6,
-                                marginBottom: 20,
-                            }}
-                        />
                     </div>
 
                     {/* Кнопка створення */}
@@ -240,7 +238,7 @@ const Plus1 = () => {
                             style={{
                                 width: '100%',
                                 height: 64,
-                                background: '#7C4EE4',
+                                background: '#007ACC',
                                 borderRadius: 50,
                                 color: 'white',
                                 fontSize: 25,
@@ -270,7 +268,22 @@ const Plus1 = () => {
                     />
                 </Link>
 
+                <Link to="/user">
+                    <img
+                        src={userImage}
+                        alt="user"
+                        style={{
+                            width: '43.851px',
+                            height: '43.804px',
+                            position: 'absolute',
+                            left: 1080,
+                            top: -70,
+                            textDecoration: 'none'
+                        }}
+                    />
+                </Link>
 
+                <Link to="/" >
                 <img
                     src={logo}
                     alt="Лого"
@@ -280,11 +293,13 @@ const Plus1 = () => {
                         position: 'absolute',
                         left: 90,
                         top: -70,
+                        textDecoration: 'none',
                     }}
                 />
+                </Link>
 
                 {/* Додавання тексту "from Zero" та "to Hero" біля логотипу */}
-                <div style={{
+                    <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -295,29 +310,12 @@ const Plus1 = () => {
                     top: -47,
                     transform: 'translateY(-50%)',
                     zIndex: 2,
+                        textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                    </Link>
 
-                {/* Додавання тексту "Про нас" біля логотипу */}
-                <Link to="/about" style={{
-                    color: '#7C4EE4',
-                    fontSize: 20,
-                    fontFamily: 'Raleway',
-                    fontWeight: '500',
-                    lineHeight: 30,
-                    position: 'absolute',
-                    left: 1060,
-                    top: -48,
-                    transform: 'translateY(-50%)',
-                    zIndex: 2,
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
-
-                {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
                 <Link to="/our" style={{
                     color: '#333333',
                     fontSize: 20,
@@ -334,7 +332,7 @@ const Plus1 = () => {
                     Наш курс
                 </Link>
 
-
+                <Link to="/" >
                 <img
                     src={newLogo}
                     alt="Новий логотип"
@@ -345,11 +343,13 @@ const Plus1 = () => {
                         left: 700,
                         top: 1100,
                         zIndex: 2,
+                        textDecoration: 'none',
                     }}
                 />
+            </Link>
 
                 {/* Додавання тексту "from Zero" та "to Hero" під новим логотипом */}
-                <div style={{
+                <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -360,10 +360,11 @@ const Plus1 = () => {
                     top: 1100,
                     transform: 'translateX(-50%)',
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                </Link>
 
                 <div style={{width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 1100}}/>
                 <div style={{
@@ -375,14 +376,15 @@ const Plus1 = () => {
                     position: 'absolute',
                     left: 565,
                     top: 1419,
-                }}>Copyright Ideapeel Inc © 2024. All Right Reserved
+                }}>Copyright Ideapeel Inc © 2025. All Right Reserved
                 </div>
             </div>
             {/* Новий блок з текстом під новим логотипом */}
             <div style={{width: '100%', height: '100%', position: 'relative', top: 1100}}>
-                <Link to="/about" style={{
+
+                <Link to="/reviews" style={{
                     position: 'absolute',
-                    left: 745,
+                    left: 969,
                     top: 45,
                     color: '#150E06',
                     fontSize: 16,
@@ -392,21 +394,8 @@ const Plus1 = () => {
                     wordWrap: 'break-word',
                     textDecoration: 'none',
                 }}>
-                    Про нас
-                </Link>
-                <div style={{
-                    position: 'absolute',
-                    left: 969,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    wordWrap: 'break-word'
-                }}>
                     Залишити відгук
-                </div>
+                </Link>
                 <Link to="/" style={{
                     position: 'absolute',
                     left: 450,
@@ -424,7 +413,7 @@ const Plus1 = () => {
                 {/* Додано рамка під текстом */}
                 <div style={{
                     width: '80%',
-                    border: '1px #7C4EE4 solid',
+                    border: '1px #007ACC solid',
                     position: 'absolute',
                     top: 330,
                     right: '10%',
@@ -434,14 +423,5 @@ const Plus1 = () => {
         </div>
     );
 };
-function App() {
-    return (
-        <Router>
-            <Switch>
-                <Route path="/plus1" component={Plus1Page} />
-                {/* Інші маршрути */}
-            </Switch>
-        </Router>
-    );
-}
+
 export default Plus1;

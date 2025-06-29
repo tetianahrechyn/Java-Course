@@ -1,23 +1,35 @@
 import React from 'react';
 import javaImage from './images/java11.png';
-import logo from './images/logo.png'; // Оновлений імпорт зображення
+import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import About from './About';
-import Our from './Our'; // Імпорт нового компонента
+import Our from './Our';
 import Log from './Log';
 import Sign from './Sign';
 import Learn from './learn';
-import { AuthProvider } from './AuthContext';
 import Theory1Page from "./Theory1";
 import Pract1Page from "./Pract1";
 import Plus1Page from "./Plus1";
-import NotFound from './NotFound';
+import Plust1Page from "./Plust1";
+import AddReviews from "./vidhyki";
+import Reviews from "./statictikaReviews";
+import User from "./user";
+import Variables from "./Variables";
+import VariablesTheory from "./VariablesTheory";
+import VariablesPlus from "./VariablesPlus";
+import VariablesPract from "./VariablesPract";
+import VariablesPlusTheory from "./VariablesPlusTheory";
+import HelloWorldPlus from "./HelloWorldPlus";
+import HelloWorldTheory from "./HelloWorldTheory";
+import HelloWorld from "./HelloWorld";
+import HelloWorldPract from "./HelloWorldPract";
+import HelloWorldPlusTheory from "./HelloWorldPlusTheory";
+import Progress from "./Progress";
 
 const HomePage = () => (
     <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
-        <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
-            <div style={{ width: 1440, height: 796, background: '#7C4EE4' }} />
+        <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
+            <div style={{ width: 1440, height: 796, background: '#007ACC' }} />
             <div style={{ width: 580, height: 393, position: 'absolute', left: 92, top: 217 }}>
                 <h1 style={{
                     color: 'white',
@@ -34,7 +46,7 @@ const HomePage = () => (
                     fontWeight: '400',
                     lineHeight: '30px',
                 }}>
-                    Java - це мова програмування, за допомогою якої можна розробляти<br />ігри, мобільні додатки, вебдодатки.
+                    TypeScript — це мова програмування на базі JavaScript, яка додає типізацію. З її допомогою можна створювати вебзастосунки, мобільні додатки, ігри та серверні програми.
                 </p>
 
                 <div style={{
@@ -64,7 +76,7 @@ const HomePage = () => (
                 <div style={{
                     width: 223,
                     height: 50,
-                    background: '#7C4EE4',
+                    background: '#007ACC',
                     borderRadius: 8,
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -121,24 +133,7 @@ const HomePage = () => (
                 <div>to Hero</div>
             </div>
 
-            {/* Додавання тексту "Про нас" біля логотипу */}
-            <Link to="/about" style={{
-                color: '#7C4EE4',
-                fontSize: 20,
-                fontFamily: 'Raleway',
-                fontWeight: '500',
-                lineHeight: 30,
-                position: 'absolute',
-                left: 800,
-                top: -48,
-                transform: 'translateY(-50%)',
-                zIndex: 2,
-                textDecoration: 'none',
-            }}>
-                Про нас
-            </Link>
-
-            {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
+            {/* Додавання тексту "Наш курс" під "Про нас" */}
             <Link to="/our" style={{
                 color: '#333333',
                 fontSize: 20,
@@ -155,7 +150,7 @@ const HomePage = () => (
                 Наш курс
             </Link>
 
-            {/* Додавання тексту "Увійти" під "Наш курс" з відстанню  */}
+            {/* Додавання тексту "Увійти" під "Наш курс" */}
             <Link to="/log" style={{
                 color: '#333333',
                 fontSize: 20,
@@ -212,13 +207,14 @@ const HomePage = () => (
                 position: 'absolute',
                 left: 565,
                 top: 1209,
-            }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
+            }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
         </div>
         {/* Новий блок з текстом під новим логотипом */}
         <div style={{ width: '100%', height: '100%', position: 'relative', top: 890 }}>
-            <Link to="/about" style={{
+           
+            <Link to="/reviews" style={{
                 position: 'absolute',
-                left: 745,
+                left: 969,
                 top: 45,
                 color: '#150E06',
                 fontSize: 16,
@@ -228,21 +224,8 @@ const HomePage = () => (
                 wordWrap: 'break-word',
                 textDecoration: 'none',
             }}>
-                Про нас
-            </Link>
-            <div style={{
-                position: 'absolute',
-                left: 969,
-                top: 45,
-                color: '#150E06',
-                fontSize: 16,
-                fontFamily: 'Raleway',
-                fontWeight: '400',
-                lineHeight: 24,
-                wordWrap: 'break-word'
-            }}>
                 Залишити відгук
-            </div>
+            </Link>
             <div style={{
                 position: 'absolute',
                 left: 450,
@@ -256,8 +239,8 @@ const HomePage = () => (
             }}>
                 Головна сторінка
             </div>
-            {/* Додано рамка під текстом */}
-            <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
+            {/* Рамка під текстом */}
+            <div style={{ width: '80%', border: '1px #007ACC solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
         </div>
     </div>
 );
@@ -266,15 +249,28 @@ const App = () => (
     <Router>
         <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<About />} />
             <Route path="/our" element={<Our />} />
             <Route path="/our/learn" element={<Learn />} />
             <Route path="/log" element={<Log />} />
             <Route path="/sign" element={<Sign />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/theory1" element={<Theory1Page />} />
             <Route path="/pract1" element={<Pract1Page />} />
             <Route path="/plus1" element={<Plus1Page />} />
+            <Route path="/plust1" element={<Plust1Page />} />
+            <Route path="/reviews/addreviews" element={<AddReviews />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/user" element={<User />} />
+            <Route path="/variables" element={<Variables />} />
+            <Route path="/variablestheory" element={<VariablesTheory />} />
+            <Route path="/variablesplus" element={<VariablesPlus />} />
+            <Route path="/variablesplustheory" element={<VariablesPlusTheory />} />
+            <Route path="/variablespract" element={<VariablesPract />} />
+            <Route path="/helloworld" element={<HelloWorld />} />
+            <Route path="/helloworldtheory" element={<HelloWorldTheory />} />
+            <Route path="/helloworldplus" element={<HelloWorldPlus />} />
+            <Route path="/helloworldplustheory" element={<HelloWorldPlusTheory />} />
+            <Route path="/helloworldpract" element={<HelloWorldPract />} />
+            <Route path="/progress" element={<Progress />} />
         </Routes>
     </Router>
 );

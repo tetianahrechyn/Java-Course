@@ -1,47 +1,63 @@
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link, useNavigate } from 'react-router-dom';
-import javaImage from "./images/java11.png";
-import React, { useState } from 'react'; // Додано useState
-import { auth } from './firebase'; // Імпорт auth з firebase.js
-import { signInWithEmailAndPassword } from 'firebase/auth'; // Імпорт функції для входу
-import loginImage from './images/login.png'; // Замініть на ваш шлях до зображення
+import React, { useState } from 'react';
+import { auth } from './firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import loginImage from './images/login.png';
 
 const Log = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null); // Стан для помилок
-    const [successMessage, setSuccessMessage] = useState(''); // Стан для повідомлення про успіх
-    const navigate = useNavigate(); // Ініціалізуємо navigate
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
+
+    const translateFirebaseError = (error) => {
+        if (!error?.code) return 'Сталася невідома помилка';
+
+        switch (error.code) {
+            case 'auth/invalid-email':
+                return 'Неправильний формат електронної пошти.';
+            case 'auth/user-not-found':
+                return 'Користувача з такою електронною поштою не знайдено.';
+            case 'auth/wrong-password':
+                return 'Невірний пароль. Спробуйте ще раз.';
+            case 'auth/too-many-requests':
+                return 'Забагато спроб входу. Будь ласка, спробуйте пізніше.';
+            default:
+                return 'Сталася помилка при вході. Перевірте дані і спробуйте знову.';
+        }
+    };
+
 
     const handleLogin = async () => {
         try {
-            await signInWithEmailAndPassword(auth, email, password); // Виклик функції для входу
+            await signInWithEmailAndPassword(auth, email, password);
             console.log('Користувача успішно увійшов');
-            setSuccessMessage('Успішний вхід!'); // Повідомлення про успіх
-            setError(null); // Скидання помилки
+            setSuccessMessage('Успішний вхід!');
+            setError(null);
 
-            // Перенаправлення на /our/learn
             navigate('/our/learn');
 
-            // Встановлюємо таймер для скидання successMessage через 5 секунд
             setTimeout(() => {
                 setSuccessMessage('');
             }, 5000); // 5000 мілісекунд = 5 секунд
         } catch (err) {
-            setError(err.message); // Встановлення повідомлення про помилку
+            setError(translateFirebaseError(err));
             console.error('Помилка входу:', err);
         }
     };
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', top: -105, background: '#F4F2F6' }}>
-            <div style={{ width: 1709, height: 934, position: 'absolute', left: 0, top: 94 }}>
+            <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
 
                 {/* Фон */}
                 <div style={{ width: 1440, height: 796, background: '#F4F2F6' }} />
 
                 {/* Логотип та текст "from Zero" та "to Hero" на фоні F4F2F6 */}
                 <div style={{ background: '#F4F2F6', position: 'relative', zIndex: 2 }}>
+                    <Link to="/" >
                     <img
                         src={logo}
                         alt="Лого"
@@ -51,11 +67,13 @@ const Log = () => {
                             position: 'absolute',
                             left: 90,
                             top: -760,
-                            zIndex: 3
+                            zIndex: 3,
+                            textDecoration: 'none',
                         }}
                     />
+                    </Link>
 
-                    <div style={{
+                    <Link to="/" style={{
                         textAlign: 'center',
                         color: '#333333',
                         fontSize: 20,
@@ -65,11 +83,12 @@ const Log = () => {
                         left: 160,
                         top: -737,
                         transform: 'translateY(-50%)',
-                        zIndex: 3
+                        zIndex: 3,
+                        textDecoration: 'none',
                     }}>
                         <div>from Zero</div>
                         <div>to Hero</div>
-                    </div>
+                    </Link>
 
 
                     <div style={{
@@ -81,8 +100,8 @@ const Log = () => {
                         gap: 16,
                         display: 'inline-flex',
                         position: 'absolute', // Додаємо абсолютне позиціювання
-                        left: 100, // Зменшуємо значення left
-                        top: -600, // Піднімаємо значення top
+                        left: 100,
+                        top: -600,
                     }}>
                         <div style={{
                             color: '#313131',
@@ -226,30 +245,6 @@ const Log = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div style={{
-                                justifyContent: 'flex-start',
-                                alignItems: 'center',
-                                gap: 252,
-                                display: 'inline-flex'
-                            }}>
-                                <div style={{
-                                    justifyContent: 'flex-start',
-                                    alignItems: 'center',
-                                    gap: 8,
-                                    display: 'flex'
-                                }}>
-                                    <div style={{ width: 24, height: 24, position: 'relative' }}>
-                                        <div style={{ width: 18, height: 18, left: 3, top: 3, position: 'absolute', border: '2px #313131 solid' }}></div>
-                                    </div>
-                                    <div style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}>Запам’ятати мене</div>
-                                </div>
-                                <div style={{ textAlign: 'right' }}>
-                                    <span style={{ color: '#FF8682', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}> </span>
-                                    <span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}>Забули</span>
-                                    <span style={{ color: '#FF8682', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}> </span>
-                                    <span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500', wordWrap: 'break-word' }}>пароль</span>
-                                </div>
-                            </div>
 
                             <div style={{
                                 width: 510,
@@ -263,7 +258,7 @@ const Log = () => {
                                 border: '1px #79747E solid',
                                 cursor: 'pointer',
                                 marginTop: 16,
-                            }} onClick={handleLogin}> {/* Виправлено: обробник події переміщено сюди */}
+                            }} onClick={handleLogin}>
                                 <div style={{ color: '#F3F3F3', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Увійти</div>
                             </div>
 
@@ -274,15 +269,15 @@ const Log = () => {
 
                             {/* Додано обгортку для тексту "Немає облікового запису?" */}
                             <div style={{
-                                width: 512, // Зроблено так само, як поля введення
+                                width: 512,
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 gap: 4,
-                                marginTop: 16, // Відстань до кнопки
+                                marginTop: 16,
                             }}>
                                 <span style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500' }}>Немає облікового запису? </span>
-                                <Link to="/sign" style={{ textDecoration: 'none' }}><span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Зареєструватися</span>
+                                <Link to="/sign" style={{ textDecoration: 'none' }}><span style={{ color: '#007ACC', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Зареєструватися</span>
                                 </Link>
                             </div>
                         </div>
@@ -292,6 +287,7 @@ const Log = () => {
                 </div>
 
                 {/* Новий логотип та текст під ним */}
+                <Link to="/" >
                 <img
                     src={newLogo}
                     alt="Новий логотип"
@@ -302,10 +298,12 @@ const Log = () => {
                         left: 700,
                         top: 900,
                         zIndex: 2,
+                        textDecoration: 'none',
                     }}
                 />
+                </Link>
 
-                <div style={{
+                <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -316,10 +314,11 @@ const Log = () => {
                     top: 900,
                     transform: 'translateX(-50%)',
                     zIndex: 2,
+                    textDecoration: 'none',
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                </div>
+                </Link>
 
                 {/* Додатковий контент */}
                 <div style={{ width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 890 }} />
@@ -332,7 +331,7 @@ const Log = () => {
                     position: 'absolute',
                     left: 565,
                     top: 1209,
-                }}>Copyright Ideapeel Inc © 2024. All Right Reserved</div>
+                }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
             </div>
 
             {/* Блок з текстом під новим логотипом */}
@@ -350,20 +349,7 @@ const Log = () => {
                 }}>
                     Головна сторінка
                 </Link>
-                <Link to="/about" style={{
-                    position: 'absolute',
-                    left: 745,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    textDecoration: 'none'
-                }}>
-                    Про нас
-                </Link>
-                <div style={{
+                <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
                     top: 45,
@@ -372,10 +358,11 @@ const Log = () => {
                     fontFamily: 'Raleway',
                     fontWeight: '400',
                     lineHeight: 24,
+                    textDecoration: 'none',
                 }}>
                     Залишити відгук
-                </div>
-                <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
+                </Link>
+                <div style={{ width: '80%', border: '1px #007ACC solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
             </div>
         </div>
     );

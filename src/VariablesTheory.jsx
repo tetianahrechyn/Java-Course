@@ -8,13 +8,13 @@ import { auth, db } from './firebase';
 import userImage from './images/user.png';
 import { collection, getDocs } from 'firebase/firestore';
 
-const Theory1Page = () => {
+const VariablesTheory = () => {
     const [theories, setTheories] = useState([]);
 
     useEffect(() => {
         const fetchTheories = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, 'theories'));
+                const querySnapshot = await getDocs(collection(db, 'thvariables'));
                 const theoryData = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
@@ -41,13 +41,13 @@ const Theory1Page = () => {
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
             <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
-                <div style={{ width: 1440, height: 1870, background: '#F4F2F6' }} />
+                <div style={{ width: 1440, height: 5170, background: '#F4F2F6' }} />
                 <div style={{ width: 580, height: 393, position: 'absolute', left: 92, top: 217 }}>
                 </div>
-                <div style={{ marginLeft: '5cm', marginRight: '5cm', marginTop: '1780px', position: 'relative', zIndex: 10 }}>
+                <div style={{ marginLeft: '5cm', marginRight: '5cm', marginTop: '-5140px', position: 'relative', zIndex: 10 }}>
                     {theories.slice(0, 1).map(theory => (
                         <div key={theory.id} style={{ position: 'relative', marginTop: '-3575px' }}>
-                            <h3 style={{ fontSize: '55px', textAlign: 'left', marginLeft: '315px' }}>{theory.title}</h3>
+                            <h3 style={{ fontSize: '55px', textAlign: 'left', marginLeft: '425px' }}>{theory.title}</h3>
                             <div
                                 dangerouslySetInnerHTML={{ __html: theory.content.replace(
                                         /<a\s/gi,
@@ -159,7 +159,7 @@ const Theory1Page = () => {
                             height: '43.804px',
                             position: 'absolute',
                             left: 700,
-                            top: 1980,
+                            top: 5280,
                             zIndex: 2,
                             textDecoration: 'none',
                         }}
@@ -175,7 +175,7 @@ const Theory1Page = () => {
                     fontWeight: '800',
                     position: 'absolute',
                     left: 812,
-                    top: 1980,
+                    top: 5280,
                     transform: 'translateX(-50%)',
                     textDecoration: 'none',
                     zIndex: 2,
@@ -184,7 +184,7 @@ const Theory1Page = () => {
                     <div>to Hero</div>
                 </Link>
 
-                <div style={{ width: 1440, height: 385, background: 'white', position: 'absolute', left: 0, top: 1960 }} />
+                <div style={{ width: 1440, height: 385, background: 'white', position: 'absolute', left: 0, top: 5260 }} />
                 <div style={{
                     color: '#150E06',
                     fontSize: 16,
@@ -193,12 +193,12 @@ const Theory1Page = () => {
                     lineHeight: '24px',
                     position: 'absolute',
                     left: 565,
-                    top: 2279,
+                    top: 5579,
                 }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
             </div>
             {/* Новий блок з текстом під новим логотипом */}
-            <div style={{ width: '100%', height: '100%', position: 'relative', top: 1970 }}>
- 
+            <div style={{ width: '100%', height: '100%', position: 'relative', top: 5270 }}>
+          
                 <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
@@ -235,4 +235,4 @@ const Theory1Page = () => {
 };
 
 
-export default Theory1Page;
+export default VariablesTheory;

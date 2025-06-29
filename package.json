@@ -16,7 +16,6 @@
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "server": "node server.js"
-
   },
   "author": "tetianahrechyn",
   "license": "ISC",
@@ -24,10 +23,13 @@
     "@testing-library/react": "^16.0.1",
     "express": "^4.21.1",
     "firebase": "^11.0.1",
+    "jspdf": "^3.0.1",
     "prettier": "^3.3.3",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.4.0",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
@@ -35,7 +37,7 @@
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
     "@cypress/code-coverage": "^3.13.5",
-    "@cypress/react": "^8.0.2",
+    "@cypress/react": "^9.0.0",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "babel-loader": "^9.2.1",
     "babel-plugin-istanbul": "^7.0.0",

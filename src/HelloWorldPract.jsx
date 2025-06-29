@@ -9,7 +9,7 @@ import { ref, onValue, set } from 'firebase/database';
 import {signOut} from "firebase/auth";
 import userImage from './images/user.png';
 
-const Pact1 = () => {
+const HelloWorldPract = () => {
     const [questions, setQuestions] = useState([]);
     const [selectedAnswers, setSelectedAnswers] = useState([]);
     const [result, setResult] = useState("");
@@ -22,7 +22,7 @@ const Pact1 = () => {
 
 
     useEffect(() => {
-        const questionsRef = ref(database, 'questions');
+        const questionsRef = ref(database, 'helloworld');
         onValue(questionsRef, (snapshot) => {
             const data = snapshot.val();
             const questionsList = [];
@@ -103,7 +103,7 @@ const Pact1 = () => {
             const total = testResults.length;
             const percentage = Math.round((correct / total) * 100);
 
-            const resultsRef = ref(database, 'testResults/' + userId);
+            const resultsRef = ref(database, 'testResultshelloworld/' + userId);
             set(resultsRef, {
                 percentage,
                 results: testResults,
@@ -268,22 +268,22 @@ const Pact1 = () => {
                 </Link>
 
                 <Link to="/" >
-                <img
-                    src={logo}
-                    alt="Лого"
-                    style={{
-                        width: '43.851px',
-                        height: '43.804px',
-                        position: 'absolute',
-                        left: 90,
-                        top: -70,
-                        textDecoration: 'none',
-                    }}
-                />
+                    <img
+                        src={logo}
+                        alt="Лого"
+                        style={{
+                            width: '43.851px',
+                            height: '43.804px',
+                            position: 'absolute',
+                            left: 90,
+                            top: -70,
+                            textDecoration: 'none',
+                        }}
+                    />
                 </Link>
 
                 {/* Додавання тексту "from Zero" та "to Hero" біля логотипу */}
-                    <Link to="/" style={{
+                <Link to="/" style={{
                     textAlign: 'center',
                     color: '#333333',
                     fontSize: 20,
@@ -298,7 +298,7 @@ const Pact1 = () => {
                 }}>
                     <div>from Zero</div>
                     <div>to Hero</div>
-                    </Link>
+                </Link>
 
                 <Link to="/our" style={{
                     color: '#333333',
@@ -317,20 +317,20 @@ const Pact1 = () => {
                 </Link>
 
                 <Link to="/" >
-                <img
-                    src={newLogo}
-                    alt="Новий логотип"
-                    style={{
-                        width: '43.851px',
-                        height: '43.804px',
-                        position: 'absolute',
-                        left: 700,
-                        top: 1100,
-                        zIndex: 2,
-                        textDecoration: 'none',
-                    }}
-                />
-            </Link>
+                    <img
+                        src={newLogo}
+                        alt="Новий логотип"
+                        style={{
+                            width: '43.851px',
+                            height: '43.804px',
+                            position: 'absolute',
+                            left: 700,
+                            top: 1100,
+                            zIndex: 2,
+                            textDecoration: 'none',
+                        }}
+                    />
+                </Link>
 
                 {/* Додавання тексту "from Zero" та "to Hero" під новим логотипом */}
                 <Link to="/" style={{
@@ -409,4 +409,4 @@ const Pact1 = () => {
 }
 
 
-export default Pact1;
+export default HelloWorldPract;
