@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from './firebase'; // Імпорт бази даних
-import { ref, set } from 'firebase/database'; // Імпорт функцій для запису в базу даних
-import javaImage from './images/java11.png';
+import { auth, db } from './firebase'; 
 import logo from './images/logo.png'; // Оновлений імпорт зображення
 import newLogo from './images/newLogo.png';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
@@ -156,8 +154,8 @@ const HelloWorldPlusTheory = () => {
     };
     return (
         <div style={{width: '100%', height: '100%', position: 'relative', background: '#F4F2F6'}}>
-            <div style={{width: 1440, height: 2834, position: 'absolute', left: 0, top: 94}}>
-                <div style={{width: 1440, height: 2900, background: '#F4F2F6'}}/>
+            <div style={{width: 1440, height: 3734, position: 'absolute', left: 0, top: 94}}>
+                <div style={{width: 1440, height: 3800, background: '#F4F2F6'}}/>
                 <div style={{width: 580, height: 393, position: 'absolute', left: 92, top: 217}}>
                 </div>
 
@@ -316,7 +314,7 @@ const HelloWorldPlusTheory = () => {
                             width: '43.851px',
                             height: '43.804px',
                             position: 'absolute',
-                            left: 980,
+                            left: 1080,
                             top: -70,
                             textDecoration: 'none'
                         }}
@@ -356,24 +354,6 @@ const HelloWorldPlusTheory = () => {
                     <div>to Hero</div>
                 </Link>
 
-                {/* Додавання тексту "Про нас" біля логотипу */}
-                <Link to="/about" style={{
-                    color: '#7C4EE4',
-                    fontSize: 20,
-                    fontFamily: 'Raleway',
-                    fontWeight: '500',
-                    lineHeight: 30,
-                    position: 'absolute',
-                    left: 1060,
-                    top: -48,
-                    transform: 'translateY(-50%)',
-                    zIndex: 2,
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
-
-                {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
                 <Link to="/our" style={{
                     color: '#333333',
                     fontSize: 20,
@@ -399,7 +379,7 @@ const HelloWorldPlusTheory = () => {
                             height: '43.804px',
                             position: 'absolute',
                             left: 700,
-                            top: 3000,
+                            top: 3900,
                             zIndex: 2,
                             textDecoration: 'none',
                         }}
@@ -415,7 +395,7 @@ const HelloWorldPlusTheory = () => {
                     fontWeight: '800',
                     position: 'absolute',
                     left: 812,
-                    top: 3000,
+                    top: 3900,
                     transform: 'translateX(-50%)',
                     zIndex: 2,
                     textDecoration: 'none',
@@ -424,7 +404,7 @@ const HelloWorldPlusTheory = () => {
                     <div>to Hero</div>
                 </Link>
 
-                <div style={{width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 3000}}/>
+                <div style={{width: 1440, height: 397, background: 'white', position: 'absolute', left: 0, top: 3900}}/>
                 <div style={{
                     color: '#150E06',
                     fontSize: 16,
@@ -433,26 +413,13 @@ const HelloWorldPlusTheory = () => {
                     lineHeight: '24px',
                     position: 'absolute',
                     left: 565,
-                    top: 3319,
+                    top: 4219,
                 }}>Copyright Ideapeel Inc © 2025. All Right Reserved
                 </div>
             </div>
             {/* Новий блок з текстом під новим логотипом */}
-            <div style={{width: '100%', height: '100%', position: 'relative', top: 3000}}>
-                <Link to="/about" style={{
-                    position: 'absolute',
-                    left: 745,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    wordWrap: 'break-word',
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
+            <div style={{width: '100%', height: '100%', position: 'relative', top: 3900}}>
+               
                 <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
@@ -484,7 +451,7 @@ const HelloWorldPlusTheory = () => {
                 {/* Додано рамка під текстом */}
                 <div style={{
                     width: '80%',
-                    border: '1px #7C4EE4 solid',
+                    border: '1px #007ACC solid',
                     position: 'absolute',
                     top: 330,
                     right: '10%',

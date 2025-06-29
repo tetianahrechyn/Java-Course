@@ -121,11 +121,11 @@ const VariablesPlus = () => {
                                     width: '100%',
                                     height: '100%',
                                     position: 'absolute',
-                                    background: '#7C4EE4',
+                                    background: '#007ACC',
                                     borderRadius: 18,
                                 }}
                             />
-                            <div style={{width: '100%', height: 56, position: 'absolute', background: '#7C4EE4'}}/>
+                            <div style={{width: '100%', height: 56, position: 'absolute', background: '#007ACC'}}/>
                         </div>
 
                         {/* Коло елементів з різними відтінками */}
@@ -147,7 +147,7 @@ const VariablesPlus = () => {
                                 position: 'absolute',
                                 left: 29,
                                 top: 123,
-                                background: '#C7A8FC',
+                                background: '#84CEFF',
                                 borderRadius: '50%',
                             }}
                         />
@@ -238,7 +238,7 @@ const VariablesPlus = () => {
                             style={{
                                 width: '100%',
                                 height: 64,
-                                background: '#7C4EE4',
+                                background: '#007ACC',
                                 borderRadius: 50,
                                 color: 'white',
                                 fontSize: 25,
@@ -276,7 +276,7 @@ const VariablesPlus = () => {
                             width: '43.851px',
                             height: '43.804px',
                             position: 'absolute',
-                            left: 980,
+                            left: 1080,
                             top: -70,
                             textDecoration: 'none'
                         }}
@@ -316,24 +316,6 @@ const VariablesPlus = () => {
                     <div>to Hero</div>
                 </Link>
 
-                {/* Додавання тексту "Про нас" біля логотипу */}
-                <Link to="/about" style={{
-                    color: '#7C4EE4',
-                    fontSize: 20,
-                    fontFamily: 'Raleway',
-                    fontWeight: '500',
-                    lineHeight: 30,
-                    position: 'absolute',
-                    left: 1060,
-                    top: -48,
-                    transform: 'translateY(-50%)',
-                    zIndex: 2,
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
-
-                {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
                 <Link to="/our" style={{
                     color: '#333333',
                     fontSize: 20,
@@ -399,20 +381,7 @@ const VariablesPlus = () => {
             </div>
             {/* Новий блок з текстом під новим логотипом */}
             <div style={{width: '100%', height: '100%', position: 'relative', top: 1100}}>
-                <Link to="/about" style={{
-                    position: 'absolute',
-                    left: 745,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    wordWrap: 'break-word',
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
+            
                 <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
@@ -444,7 +413,7 @@ const VariablesPlus = () => {
                 {/* Додано рамка під текстом */}
                 <div style={{
                     width: '80%',
-                    border: '1px #7C4EE4 solid',
+                    border: '1px #007ACC solid',
                     position: 'absolute',
                     top: 330,
                     right: '10%',

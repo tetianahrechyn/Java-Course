@@ -91,7 +91,7 @@ const Progress = () => {
     const gradient = `conic-gradient(
         #C5B6F2 0%,
         #A084EA ${percentage * 0.5}%,
-        #7C4EE4 ${percentage}%,
+        #007ACC ${percentage}%,
         #E0E0E0 ${percentage}% 100%
     )`;
 
@@ -117,7 +117,7 @@ const Progress = () => {
 
         doc.setFontSize(33);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(125, 78, 228);
+        doc.setTextColor(0, 122, 204);
         doc.text('CERTIFICATE', 65, 50);
 
         doc.setFontSize(10);
@@ -128,7 +128,7 @@ const Progress = () => {
         doc.setFontSize(28);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(0, 0, 0);
-        doc.text('Java for Beginners', 61, 80);
+        doc.text('TypeScript for Beginners', 48, 80);
 
         doc.setFontSize(7);
         doc.setTextColor(0, 0, 0);
@@ -139,8 +139,8 @@ const Progress = () => {
 
         doc.setFontSize(7);
         doc.text(
-            'This certificate certifies the successful completion of the "Java for Beginners" and the mastery of core Java concepts: ' +
-            'variables, literals, primitive data types, operators, input and output, expressions, statements and blocks, comments.',
+            'This certificate certifies the successful completion of the "TypeScript for Beginners" and the mastery of core TypeScript concepts: ' +
+            'programming basics, variables, constants, data types.',
             110,
             115,
             { maxWidth: 120, align: 'center' }
@@ -259,24 +259,6 @@ const Progress = () => {
                     <div>to Hero</div>
                 </Link>
 
-                {/* Додавання тексту "Про нас" біля логотипу */}
-                <Link to="/about" style={{
-                    color: '#7C4EE4',
-                    fontSize: 20,
-                    fontFamily: 'Raleway',
-                    fontWeight: '500',
-                    lineHeight: 30,
-                    position: 'absolute',
-                    left: 1060,
-                    top: -48,
-                    transform: 'translateY(-50%)',
-                    zIndex: 2,
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
-
-                {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
                 <Link to="/our" style={{
                     color: '#333333',
                     fontSize: 20,
@@ -361,7 +343,7 @@ const Progress = () => {
                                         position: 'absolute',
                                     }}
                                 >
-                    <span style={{ fontSize: '24px', color: '#7C4EE4' }}>
+                    <span style={{ fontSize: '24px', color: '#007ACC' }}>
                         {percentage}%
                     </span>
                                 </div>
@@ -383,7 +365,7 @@ const Progress = () => {
                                     style={{
                                         padding: '10px 20px',
                                         fontSize: '16px',
-                                        backgroundColor: '#7C4EE4',
+                                        backgroundColor: '#007ACC',
                                         color: '#fff',
                                         border: 'none',
                                         borderRadius: '8px',
@@ -399,7 +381,7 @@ const Progress = () => {
                                 <Link to="/our" style={{
                                     padding: '10px 20px',
                                     fontSize: '16px',
-                                    backgroundColor: '#7C4EE4',
+                                    backgroundColor: '#007ACC',
                                     color: '#fff',
                                     textDecoration: 'none',
                                     borderRadius: '8px',
@@ -445,20 +427,7 @@ const Progress = () => {
             </div>
             {/* Новий блок з текстом під новим логотипом */}
             <div style={{width: '100%', height: '100%', position: 'relative', top: 1100}}>
-                <Link to="/about" style={{
-                    position: 'absolute',
-                    left: 745,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    wordWrap: 'break-word',
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
+ 
                 <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
@@ -490,7 +459,7 @@ const Progress = () => {
                 {/* Додано рамка під текстом */}
                 <div style={{
                     width: '80%',
-                    border: '1px #7C4EE4 solid',
+                    border: '1px #007ACC solid',
                     position: 'absolute',
                     top: 330,
                     right: '10%',

@@ -277,7 +277,7 @@ const Log = () => {
                                 marginTop: 16,
                             }}>
                                 <span style={{ color: '#313131', fontSize: 14, fontFamily: 'Poppins', fontWeight: '500' }}>Немає облікового запису? </span>
-                                <Link to="/sign" style={{ textDecoration: 'none' }}><span style={{ color: '#7C4EE4', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Зареєструватися</span>
+                                <Link to="/sign" style={{ textDecoration: 'none' }}><span style={{ color: '#007ACC', fontSize: 14, fontFamily: 'Poppins', fontWeight: '600' }}>Зареєструватися</span>
                                 </Link>
                             </div>
                         </div>
@@ -349,19 +349,6 @@ const Log = () => {
                 }}>
                     Головна сторінка
                 </Link>
-                <Link to="/about" style={{
-                    position: 'absolute',
-                    left: 745,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    textDecoration: 'none'
-                }}>
-                    Про нас
-                </Link>
                 <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
@@ -375,7 +362,7 @@ const Log = () => {
                 }}>
                     Залишити відгук
                 </Link>
-                <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
+                <div style={{ width: '80%', border: '1px #007ACC solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
             </div>
         </div>
     );

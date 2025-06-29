@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from './firebase'; // Імпорт бази даних
-import { ref, set } from 'firebase/database'; // Імпорт функцій для запису в базу даних
-import javaImage from './images/java11.png';
-import logo from './images/logo.png'; // Оновлений імпорт зображення
+import { auth, db } from './firebase'; 
+import logo from './images/logo.png'; 
 import newLogo from './images/newLogo.png';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import outImage from './images/out.png';
@@ -153,7 +151,7 @@ const AddReviews = () => {
                             marginTop: 20,
                             padding: '10px 20px',
                             borderRadius: 8,
-                            backgroundColor: '#7C4EE4',
+                            backgroundColor: '#007ACC',
                             color: 'white',
                             border: 'none',
                             fontSize: 16,
@@ -197,24 +195,6 @@ const AddReviews = () => {
                     <div>to Hero</div>
                     </Link>
 
-                {/* Додавання тексту "Про нас" біля логотипу */}
-                <Link to="/about" style={{
-                    color: '#7C4EE4',
-                    fontSize: 20,
-                    fontFamily: 'Raleway',
-                    fontWeight: '500',
-                    lineHeight: 30,
-                    position: 'absolute',
-                    left: 1060,
-                    top: -48,
-                    transform: 'translateY(-50%)',
-                    zIndex: 2,
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
-
-                {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
                 <Link to="/our" style={{
                     color: '#333333',
                     fontSize: 20,
@@ -280,20 +260,7 @@ const AddReviews = () => {
             </div>
             {/* Новий блок з текстом під новим логотипом */}
             <div style={{width: '100%', height: '100%', position: 'relative', top: 1100}}>
-                <Link to="/about" style={{
-                    position: 'absolute',
-                    left: 745,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    wordWrap: 'break-word',
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
+         
                 <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
@@ -325,7 +292,7 @@ const AddReviews = () => {
                 {/* Додано рамка під текстом */}
                 <div style={{
                     width: '80%',
-                    border: '1px #7C4EE4 solid',
+                    border: '1px #007ACC solid',
                     position: 'absolute',
                     top: 330,
                     right: '10%',

@@ -1,14 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import bitImage from './images/bit.png';
 import logo from './images/logo.png';
 import newLogo from './images/newLogo.png';
 import { Link } from 'react-router-dom';
 import outImage from './images/out.png';
-import palImage from './images/pal.png';
-import komImage from './images/kom.png';
-import wordImage from './images/word.png';
-import pal1Image from './images/pal1.png';
-import kom1Image from './images/kom1.png';
 import { signOut } from "firebase/auth";
 import { auth, db } from './firebase';
 import userImage from './images/user.png';
@@ -47,13 +41,13 @@ const Theory1Page = () => {
     return (
         <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F2F6' }}>
             <div style={{ width: 1440, height: 934, position: 'absolute', left: 0, top: 94 }}>
-                <div style={{ width: 1440, height: 2970, background: '#F4F2F6' }} />
+                <div style={{ width: 1440, height: 1870, background: '#F4F2F6' }} />
                 <div style={{ width: 580, height: 393, position: 'absolute', left: 92, top: 217 }}>
                 </div>
-                <div style={{ marginLeft: '5cm', marginRight: '5cm', marginTop: '680px', position: 'relative', zIndex: 10 }}>
+                <div style={{ marginLeft: '5cm', marginRight: '5cm', marginTop: '1780px', position: 'relative', zIndex: 10 }}>
                     {theories.slice(0, 1).map(theory => (
                         <div key={theory.id} style={{ position: 'relative', marginTop: '-3575px' }}>
-                            <h3 style={{ fontSize: '55px', textAlign: 'left', marginLeft: '375px' }}>{theory.title}</h3>
+                            <h3 style={{ fontSize: '55px', textAlign: 'left', marginLeft: '315px' }}>{theory.title}</h3>
                             <div
                                 dangerouslySetInnerHTML={{ __html: theory.content.replace(
                                         /<a\s/gi,
@@ -99,7 +93,7 @@ const Theory1Page = () => {
                             width: '43.851px',
                             height: '43.804px',
                             position: 'absolute',
-                            left: 980,
+                            left: 1080,
                             top: -70,
                             textDecoration: 'none'
                         }}
@@ -139,24 +133,6 @@ const Theory1Page = () => {
                     <div>to Hero</div>
                 </Link>
 
-                {/* Додавання тексту "Про нас" біля логотипу */}
-                <Link to="/about" style={{
-                    color: '#7C4EE4',
-                    fontSize: 20,
-                    fontFamily: 'Raleway',
-                    fontWeight: '500',
-                    lineHeight: 30,
-                    position: 'absolute',
-                    left: 1060,
-                    top: -48,
-                    transform: 'translateY(-50%)',
-                    zIndex: 2,
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
-
-                {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
                 <Link to="/our" style={{
                     color: '#333333',
                     fontSize: 20,
@@ -183,7 +159,7 @@ const Theory1Page = () => {
                             height: '43.804px',
                             position: 'absolute',
                             left: 700,
-                            top: 3080,
+                            top: 1980,
                             zIndex: 2,
                             textDecoration: 'none',
                         }}
@@ -199,7 +175,7 @@ const Theory1Page = () => {
                     fontWeight: '800',
                     position: 'absolute',
                     left: 812,
-                    top: 3080,
+                    top: 1980,
                     transform: 'translateX(-50%)',
                     textDecoration: 'none',
                     zIndex: 2,
@@ -208,7 +184,7 @@ const Theory1Page = () => {
                     <div>to Hero</div>
                 </Link>
 
-                <div style={{ width: 1440, height: 385, background: 'white', position: 'absolute', left: 0, top: 3060 }} />
+                <div style={{ width: 1440, height: 385, background: 'white', position: 'absolute', left: 0, top: 1960 }} />
                 <div style={{
                     color: '#150E06',
                     fontSize: 16,
@@ -217,25 +193,12 @@ const Theory1Page = () => {
                     lineHeight: '24px',
                     position: 'absolute',
                     left: 565,
-                    top: 3379,
+                    top: 2279,
                 }}>Copyright Ideapeel Inc © 2025. All Right Reserved</div>
             </div>
             {/* Новий блок з текстом під новим логотипом */}
-            <div style={{ width: '100%', height: '100%', position: 'relative', top: 3070 }}>
-                <Link to="/about" style={{
-                    position: 'absolute',
-                    left: 745,
-                    top: 45,
-                    color: '#150E06',
-                    fontSize: 16,
-                    fontFamily: 'Raleway',
-                    fontWeight: '400',
-                    lineHeight: 24,
-                    wordWrap: 'break-word',
-                    textDecoration: 'none',
-                }}>
-                    Про нас
-                </Link>
+            <div style={{ width: '100%', height: '100%', position: 'relative', top: 1970 }}>
+ 
                 <Link to="/reviews" style={{
                     position: 'absolute',
                     left: 969,
@@ -265,7 +228,7 @@ const Theory1Page = () => {
                     Головна сторінка
                 </Link>
                 {/* Додано рамка під текстом */}
-                <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 334, right: '10%', left: '8%' }}></div>
+                <div style={{ width: '80%', border: '1px #007ACC solid', position: 'absolute', top: 334, right: '10%', left: '8%' }}></div>
             </div>
         </div>
     );

@@ -76,9 +76,9 @@ const LearnPage = () => {
                 wordWrap: 'break-word',
                 position: 'absolute',
                 top: -100,
-                left: 700,
+                left: 670,
             }}>
-                ВСТУП ДО JAVA
+                ЩО ТАКЕ TYPESCRIPT
             </div>
             <div style={{
                 color: '#333333',
@@ -121,7 +121,7 @@ const LearnPage = () => {
                         width: '43.851px',
                         height: '43.804px',
                         position: 'absolute',
-                        left: '980px',
+                        left: '1080px',
                         top: '-70px'
                     }}
                 />
@@ -142,7 +142,7 @@ const LearnPage = () => {
 
 
             <Link to="/theory1" style={{
-                color: '#7C4EE4',
+                color: '#007ACC',
                 fontSize: 20,
                 fontFamily: 'Raleway, sans-serif',
                 fontWeight: 700,
@@ -171,7 +171,7 @@ const LearnPage = () => {
             }}>
                 <div style={{ margin: 0 }}> {/* Зменшили margin для верхнього тексту */}
                     Тут ти зможеш опанувати  <br />
-                    фундаментальні знання з Java
+                    фундаментальні знання з TypeScript
                 </div>
             </div>
 
@@ -209,7 +209,7 @@ const LearnPage = () => {
             </div>
 
             <Link to="/pract1" style={{
-                color: '#7C4EE4',
+                color: '#007ACC',
                 fontSize: 20,
                 fontFamily: 'Raleway, sans-serif', // Виправлено шрифт
                 fontWeight: 700,
@@ -267,7 +267,7 @@ const LearnPage = () => {
                     />
 
                     <Link to="/plus1" style={{
-                        color: '#7C4EE4',
+                        color: '#007ACC',
                         fontSize: 20,
                         fontFamily: 'Raleway, sans-serif',
                         fontWeight: 700,
@@ -282,7 +282,7 @@ const LearnPage = () => {
                     </Link>
 
                     <Link to="/plust1" style={{
-                        color: '#7C4EE4',
+                        color: '#007ACC',
                         fontSize: 20,
                         fontFamily: 'Raleway, sans-serif',
                         fontWeight: 700,
@@ -310,7 +310,7 @@ const LearnPage = () => {
                         }}
                     />
                     <Link to="/progress" style={{
-                        color: '#7C4EE4',
+                        color: '#007ACC',
                         fontSize: 20,
                         fontFamily: 'Raleway, sans-serif',
                         fontWeight: 700,
@@ -377,24 +377,6 @@ const LearnPage = () => {
                 <div>to Hero</div>
                 </Link>
 
-            {/* Додавання тексту "Про нас" біля логотипу */}
-            <Link to="/about" style={{
-                color: '#7C4EE4',
-                fontSize: 20,
-                fontFamily: 'Raleway',
-                fontWeight: '500',
-                lineHeight: 30,
-                position: 'absolute',
-                left: 1060,
-                top: -48,
-                transform: 'translateY(-50%)',
-                zIndex: 2,
-                textDecoration: 'none',
-            }}>
-                Про нас
-            </Link>
-
-            {/* Додавання тексту "Наш курс" під "Про нас" з відстанню  */}
             <Link to="/our" style={{
                 color: '#333333',
                 fontSize: 20,
@@ -459,20 +441,7 @@ const LearnPage = () => {
         </div>
         {/* Новий блок з текстом під новим логотипом */}
         <div style={{ width: '100%', height: '100%', position: 'relative', top: 890 }}>
-            <Link to="/about" style={{
-                position: 'absolute',
-                left: 745,
-                top: 45,
-                color: '#150E06',
-                fontSize: 16,
-                fontFamily: 'Raleway',
-                fontWeight: '400',
-                lineHeight: 24,
-                wordWrap: 'break-word',
-                textDecoration: 'none',
-            }}>
-                Про нас
-            </Link>
+
             <Link to="/reviews" style={{
                 position: 'absolute',
                 left: 969,
@@ -502,7 +471,7 @@ const LearnPage = () => {
                 Головна сторінка
             </Link>
             {/* Додано рамка під текстом */}
-            <div style={{ width: '80%', border: '1px #7C4EE4 solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
+            <div style={{ width: '80%', border: '1px #007ACC solid', position: 'absolute', top: 330, right: '10%', left: '8%' }}></div>
         </div>
     </div>
     );
